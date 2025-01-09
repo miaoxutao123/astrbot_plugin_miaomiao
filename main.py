@@ -57,14 +57,19 @@ class MyPlugin(Star):
         touzi_num = random.randint(1,6)
         yield event.plain_result(f"{user_name}扔出了{touzi_num}!") # 发送一条纯文本消息
     
-    @command_group("tts")
-    def tts(self):
+    @command_group("tts")  # 定义 tts 命令组
+    def tts_group(self):
+        """tts 命令组的入口"""
         pass
 
-    @tts.command("paimeng")
-    async def tts(self, event: AstrMessageEvent,message:str):
-        #message = event.get_message_str()
-        yield event.plain_result(f"派蒙说{message}")
+    @tts_group.command("paimeng")  # 定义 tts 命令组的子命令 paimeng
+    async def paimeng(self, event: AstrMessageEvent, message: str):
+        """
+        派蒙说消息
+        :param event: 事件对象
+        :param message: 消息内容
+        """
+        yield event.plain_result(f"派蒙说：{message}")
 
     @command_group("math")
     def math(self):
