@@ -65,3 +65,17 @@ class MyPlugin(Star):
     async def tts(self, event: AstrMessageEvent,message:str):
         #message = event.get_message_str()
         yield event.plain_result(f"派蒙说{message}")
+
+    @command_group("math")
+    def math(self):
+        pass
+
+    @math.command("add")
+    async def add(self, event: AstrMessageEvent, a: int, b: int):
+        # /math add 1 2 -> 结果是: 3
+        yield event.plain_result(f"结果是: {a + b}")
+
+    @math.command("sub")
+    async def sub(self, event: AstrMessageEvent, a: int, b: int):
+        # /math sub 1 2 -> 结果是: -1
+        yield event.plain_result(f"结果是: {a - b}")
