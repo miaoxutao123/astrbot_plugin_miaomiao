@@ -56,3 +56,12 @@ class MyPlugin(Star):
         user_name = event.get_sender_name()
         touzi_num = random.randint(1,6)
         yield event.plain_result(f"{user_name}扔出了{touzi_num}!") # 发送一条纯文本消息
+    
+    @command_group("tts")
+    def tts(self):
+        pass
+
+    @tts.command("paimeng")
+    async def tts(self, event: AstrMessageEvent):
+        message = event.get_message_str()
+        yield event.plain_result(f"派萌说{message}")
