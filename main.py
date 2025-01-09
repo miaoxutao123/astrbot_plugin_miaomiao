@@ -46,13 +46,13 @@ class MyPlugin(Star):
         yield event.plain_result(f"喵喵喵, {user_name}!") # 发送一条纯文本消息
 
     @filter.command("今天吃什么呀")
-    async def miaomiaomiao(self, event: AstrMessageEvent):
+    async def eat(self, event: AstrMessageEvent):
         user_name = event.get_sender_name()
         choice = random.choice(self.foods)
         yield event.plain_result(f"喵喵喵{user_name}, 今天吃{choice}吧!") # 发送一条纯文本消息
 
     @filter.command("扔个骰子")
-    async def miaomiaomiao(self, event: AstrMessageEvent):
+    async def random(self, event: AstrMessageEvent):
         user_name = event.get_sender_name()
         touzi_num = random.randint(1,6)
         yield event.plain_result(f"{user_name}扔出了{touzi_num}!") # 发送一条纯文本消息
