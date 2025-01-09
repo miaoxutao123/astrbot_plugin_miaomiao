@@ -62,6 +62,6 @@ class MyPlugin(Star):
         pass
 
     @tts.command("paimeng")
-    async def tts(self, event: AstrMessageEvent):
-        message = event.get_message_str()
-        yield event.plain_result(f"派萌说{message}")
+    async def tts(self, event: AstrMessageEvent,message:str):
+        #message = event.get_message_str()
+        yield event.plain_result(f"派蒙说{message}")
