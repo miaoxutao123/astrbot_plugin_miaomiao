@@ -1,10 +1,7 @@
-# helloworld
+# 喵喵喵
 
-AstrBot 插件模板
+喵喵喵，喵喵喵喵喵
 
-A template plugin for AstrBot plugin feature
+# 喵喵
 
-# 支持
-
-[帮助文档](https://astrbot.soulter.top/center/docs/%E5%BC%80%E5%8F%91/%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/
-)
+喵喵喵喵喵，喵喵喵喵，喵喵
