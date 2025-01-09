@@ -8,6 +8,15 @@ import random
 class MyPlugin(Star):
     def __init__(self, context: Context):
         super().__init__(context)
+    # 注册指令的装饰器。指令名为 helloworld。注册成功后，发送 `/helloworld` 就会触发这个指令，并回复 `你好, {user_name}!`
+    @filter.command("喵")
+    async def miaomiaomiao(self, event: AstrMessageEvent):
+        user_name = event.get_sender_name()
+        yield event.plain_result(f"喵喵喵, {user_name}!") # 发送一条纯文本消息
+
+    @filter.command("今天吃什么呀")
+    async def eat(self, event: AstrMessageEvent):
+        user_name = event.get_sender_name()
         foods = [
         "红烧肉", "西红柿炒鸡蛋", "青椒土豆丝", "鱼香肉丝", "宫保鸡丁", 
         "麻婆豆腐", "清炒菠菜", "酸辣土豆丝", "糖醋排骨", "蒜蓉空心菜", 
@@ -39,16 +48,7 @@ class MyPlugin(Star):
         "比利时华夫饼", "荷兰煎饼", "奥地利炸猪排", "葡萄牙蛋挞", "匈牙利炖牛肉", 
         "波兰饺子", "捷克烤猪肘", "丹麦开放式三明治", "芬兰驯鹿肉", "冰岛发酵鲨鱼肉"
         ]
-    # 注册指令的装饰器。指令名为 helloworld。注册成功后，发送 `/helloworld` 就会触发这个指令，并回复 `你好, {user_name}!`
-    @filter.command("喵")
-    async def miaomiaomiao(self, event: AstrMessageEvent):
-        user_name = event.get_sender_name()
-        yield event.plain_result(f"喵喵喵, {user_name}!") # 发送一条纯文本消息
-
-    @filter.command("今天吃什么呀")
-    async def eat(self, event: AstrMessageEvent):
-        user_name = event.get_sender_name()
-        choice = random.choice(self.foods)
+        choice = random.choice(foods)
         yield event.plain_result(f"喵喵喵{user_name}, 今天吃{choice}吧!") # 发送一条纯文本消息
 
     @filter.command("扔个骰子")
