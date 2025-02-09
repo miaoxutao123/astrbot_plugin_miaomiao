@@ -1,16 +1,9 @@
-from astrbot.api.context import Context
-from astrbot.api.event import AstrMessageEvent, MessageEventResult
-from astrbot.api.message import At, Record
-from astrbot.api.plugin import Star, register
-from astrbot.api.command import command
+from astrbot.api.all import *
 import base64
 from gradio_client import Client
 import random
 from typing import AsyncGenerator
-from astrbot.api.filter import filter
-from astrbot.api.command import command_group
 
-from astrbot.api.llm_tool import llm_tool
 
 @register("miaomiao", "miaomiao", "喵喵开发的第一个插件", "0.0.2")
 class MyPlugin(Star):
