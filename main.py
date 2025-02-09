@@ -6,17 +6,17 @@ from typing import AsyncGenerator
 
 
 @register("miaomiao", "miaomiao", "喵喵开发的第一个插件", "0.0.2","https://github.com/miaoxutao123/astrbot_plugin_miaomiao")
-class MyPlugin(Star):
+class miaomiao(Star):
     def __init__(self, context: Context):
         super().__init__(context)
     # 注册指令的装饰器。指令名为 helloworld。注册成功后，发送 `/helloworld` 就会触发这个指令，并回复 `你好, {user_name}!`
-    @filter.command("喵")
+    @command("喵")
     async def miaomiaomiao(self, event: AstrMessageEvent):
         '''喵喵喵喵喵'''
         user_name = event.get_sender_name()
         yield event.plain_result(f"喵喵喵, {user_name}!") # 发送一条纯文本消息
 
-    @filter.command("今天吃什么呀")
+    @command("今天吃什么呀")
     async def eat(self, event: AstrMessageEvent):
         '''随机推荐一种食物'''
         user_name = event.get_sender_name()
@@ -54,7 +54,7 @@ class MyPlugin(Star):
         choice = random.choice(foods)
         yield event.plain_result(f"喵喵喵{user_name}, 今天吃{choice}吧!") # 发送一条纯文本消息
 
-    @filter.command("扔个骰子")
+    @command("扔个骰子")
     async def random(self, event: AstrMessageEvent):
         user_name = event.get_sender_name()
         touzi_num = random.randint(1,6)
