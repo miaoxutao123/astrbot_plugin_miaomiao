@@ -1,7 +1,7 @@
 import base64
 from gradio_client import Client
 
-def generate_audio(text, language, speaker, noise_scale=0.5, noise_scale_w=0.5, length_scale=1.0):
+async def generate_audio(text, language, speaker, noise_scale=0.5, noise_scale_w=0.5, length_scale=1.0):
     client = Client("https://miaomiaoren-vits-uma-genshin-honkai.hf.space/")
     
     # 构造符合API要求的请求体
@@ -15,7 +15,7 @@ def generate_audio(text, language, speaker, noise_scale=0.5, noise_scale_w=0.5, 
     ]
 
     try:
-        result = client.predict(*payload, api_name="/generate")
+        result = await client.predict(*payload, api_name="/generate")
         
         # 打印调试信息
         print("API响应:", result)
