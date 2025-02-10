@@ -5,7 +5,7 @@ from typing import AsyncGenerator
 from .tts_test import generate_audio 
 import os
 
-@register("miaomiao", "miaomiao", "喵喵开发的第一个插件", "0.0.3","https://github.com/miaoxutao123/astrbot_plugin_miaomiao")
+@register("miaomiao", "miaomiao", "喵喵开发的第一个插件", "1.0","https://github.com/miaoxutao123/astrbot_plugin_miaomiao")
 class miaomiao(Star):
     def __init__(self, context: Context):
         super().__init__(context)
@@ -78,9 +78,11 @@ class miaomiao(Star):
             Character_Name(string): 需要调用的tts角色名称
             tts_message(string): 需要转换的文本
         '''
+        url = self.config.get("huggingface_api_url")
         yield event.plain_result(f"喵喵人正在给{Character_Name}打电话，请稍等片刻。")
         try:
             result = await generate_audio(
+                url=url,
                 text=tts_message,  # 不超过100字的文本
                 language="中文",  # 语言代码
                 speaker=Character_Name  # 说话者名称
