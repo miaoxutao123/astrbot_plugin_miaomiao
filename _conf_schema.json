@@ -1,0 +1,8 @@
+{
+    "huggingface_api_url": {
+        "description": "Huggingface 服务 API 地址",
+        "type": "string",
+        "hint": "请输入您部署的 Huggingface 服务 API 地址",
+        "obvious_hint": true
+    }
+}

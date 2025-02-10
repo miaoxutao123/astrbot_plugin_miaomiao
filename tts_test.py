@@ -2,7 +2,6 @@ import base64
 from gradio_client import Client
 from pydub import AudioSegment
 import os
-import asyncio
 
 async def generate_audio(text, language, speaker, noise_scale=0.5, noise_scale_w=0.5, length_scale=1.0):
     try:
@@ -64,6 +63,8 @@ async def generate_audio(text, language, speaker, noise_scale=0.5, noise_scale_w
         print(f"API请求失败: {e}")
         message = "API请求失败: " + str(e)
         return {"message": message}
+
+#以下为测试功能时的示例代码
 
 # # 使用示例
 # if __name__ == "__main__":

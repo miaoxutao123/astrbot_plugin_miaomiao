@@ -59,28 +59,21 @@ class miaomiao(Star):
         user_name = event.get_sender_name()
         touzi_num = random.randint(1,6)
         yield event.plain_result(f"{user_name}扔出了{touzi_num}!") # 发送一条纯文本消息
-
-    @command_group("math")
-    def math(self):
-        pass
-
-    @math.command("add")
-    async def add(self, event: AstrMessageEvent, a: int, b: int):
-        # /math add 1 2 -> 结果是: 3
-        yield event.plain_result(f"结果是: {a + b}")
-
-    @math.command("sub")
-    async def sub(self, event: AstrMessageEvent, a: int, b: int):
-        # /math sub 1 2 -> 结果是: -1
-        yield event.plain_result(f"结果是: {a - b}")
-
     
 
     @llm_tool(name="gpt-sovits")
     async def gptsovits(self, event: AstrMessageEvent, Character_Name: str, tts_message: str):
         '''
-        当用户想要听某一个角色的语音时，或者用户想要和某一个角色语音对话或者提问时，调用这个函数，当用户想要和一个角色语音对话时，先联网搜索并思考角色会怎样回答这个问题，然后生成回答，回答越简单宇浩，不可超过100字，如果请求失败，告诉用户失败原因。
-        角色只包含以下几个：神里绫华（龟龟）、琴、空（空哥）、丽莎、荧（荧妹）、芭芭拉、凯亚、迪卢克、雷泽、安柏、温迪、香菱、北斗、行秋、魈、凝光、可莉、钟离、菲谢尔（皇女）、班尼特、达达利亚（公子）、诺艾尔（女仆）、七七、重云、甘雨（椰羊）、阿贝多、迪奥娜（猫猫）、莫娜、刻晴、砂糖、辛焱、罗莎莉亚、胡桃、枫原万叶（万叶）、烟绯、宵宫、托马、优菈、雷电将军（雷神）、早柚、珊瑚宫心海（心海，扣扣米）、五郎、九条裟罗、荒泷一斗（一斗）、埃洛伊、申鹤、八重神子（神子）、神里绫人（绫人）、夜兰、久岐忍、鹿野苑平藏、提纳里、柯莱、多莉、云堇、纳西妲（草神）、深渊使徒、妮露、赛诺
+        当用户想要听某一个角色的语音时，或者用户想要和某一个角色语音对话或者提问时，调用这个函数，
+        当用户想要和一个角色语音对话时，先联网搜索并思考角色会怎样回答这个问题，然后生成回答，回答越简单越好，
+        不可超过100字，如果请求失败，告诉用户失败原因。
+        角色只包含以下几个：派蒙、神里绫华（龟龟）、琴、空（空哥）、丽莎、荧（荧妹）、
+        芭芭拉、凯亚、迪卢克、雷泽、安柏、温迪、香菱、北斗、行秋、魈、凝光、可莉、钟离、
+        菲谢尔（皇女）、班尼特、达达利亚（公子）、诺艾尔（女仆）、七七、重云、甘雨（椰羊）、
+        阿贝多、迪奥娜（猫猫）、莫娜、刻晴、砂糖、辛焱、罗莎莉亚、胡桃、枫原万叶（万叶）、
+        烟绯、宵宫、托马、优菈、雷电将军（雷神）、早柚、珊瑚宫心海（心海，扣扣米）、
+        五郎、九条裟罗、荒泷一斗（一斗）、埃洛伊、申鹤、八重神子（神子）、神里绫人（绫人）、
+        夜兰、久岐忍、鹿野苑平藏、提纳里、柯莱、多莉、云堇、纳西妲（草神）、深渊使徒、妮露、赛诺
         Args:
             Character_Name(string): 需要调用的tts角色名称
             tts_message(string): 需要转换的文本
