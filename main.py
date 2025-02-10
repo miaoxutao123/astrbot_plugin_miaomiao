@@ -3,6 +3,7 @@ import base64
 import random
 from typing import AsyncGenerator
 from .tts_test import generate_audio 
+import os
 
 @register("miaomiao", "miaomiao", "喵喵开发的第一个插件", "0.0.3","https://github.com/miaoxutao123/astrbot_plugin_miaomiao")
 class miaomiao(Star):
@@ -98,12 +99,16 @@ class miaomiao(Star):
             print(f"generate_audio 返回结果: {result}")
             if result is None or "audio_data" not in result:
                 raise ValueError("generate_audio 返回了无效的结果")
+            audio_file = result["audio_file"]
             chain = [
                 At(qq=event.get_sender_id()),  # At 消息发送者
-                Record(file=result["audio_file"])  # 发送语音消息
+                Record(file=audio_file)  # 发送语音消息
             ]
             yield event.chain_result(chain)
             msg = Character_Name + "来信啦"
             yield event.plain_result(msg)
+            # 删除语音文件
+            if os.path.exists(audio_file):
+                os.remove(audio_file)
         except Exception as e:
             yield event.plain_result(f"请求失败: {str(e)}")
