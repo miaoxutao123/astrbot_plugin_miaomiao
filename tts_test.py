@@ -3,10 +3,9 @@ from gradio_client import Client
 from pydub import AudioSegment
 import os
 
-async def generate_audio(text, language, speaker, noise_scale=0.5, noise_scale_w=0.5, length_scale=1.0):
+async def generate_audio(url,text, language, speaker, noise_scale=0.5, noise_scale_w=0.5, length_scale=1.0):
     try:
         # 确保 URL 是合法的
-        url = "https://miaomiaoren-vits-uma-genshin-honkai.hf.space/"
         client = Client(url)
     except Exception as e:
         print(f"无法连接到 Hugging Face Space，可能是 URL 无效或网络问题: {e}")
