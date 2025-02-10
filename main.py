@@ -83,9 +83,7 @@ class miaomiao(Star):
             Character_Name(string): 需要调用的tts角色名称
             tts_message(string): 需要转换的文本
         '''
-        await self.context.send_message(
-            event.unified_msg_origin, Plain(f"喵喵人正在给{Character_Name}打电话，请稍等片刻。")
-        )
+        yield event.plain_result(f"喵喵人正在给{Character_Name}打电话，请稍等片刻。")
         result = await generate_audio(
             text=tts_message,  # 不超过100字的文本
             language="中文",  # 语言代码
@@ -95,11 +93,11 @@ class miaomiao(Star):
             # noise_scale_w=0.6,
             # length_scale=1.0
         )
-        # chain = [
-        #     At(qq=event.get_sender_id()),  # At 消息发送者
-        #     Record(audio_base64=result["audio_data"])  # 发送语音消息
-        # ]
-        self.context.send_message(event.unified_msg_origin, Record(audio_base64=result["audio_data"]))
-        # await event.chain_result(chain)
+        chain = [
+            At(qq=event.get_sender_id()),  # At 消息发送者
+            Record(audio_base64=result["audio_data"])  # 发送语音消息
+        ]
+        # self.context.send_message(event.unified_msg_origin, Record(audio_base64=result["audio_data"]))
+        yield event.chain_result(chain)
         return Character_Name + "来信啦"
 
