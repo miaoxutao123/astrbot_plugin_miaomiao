@@ -78,7 +78,7 @@ class miaomiao(Star):
             Character_Name(string): 需要调用的tts角色名称
             tts_message(string): 需要转换的文本
         '''
-        url = self.config.get("huggingface_api_url")
+        url = "https://miaomiaoren-vits-uma-genshin-honkai.hf.space/"
         yield event.plain_result(f"喵喵人正在给{Character_Name}打电话，请稍等片刻。")
         try:
             result = await generate_audio(
