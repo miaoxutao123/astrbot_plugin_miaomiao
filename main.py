@@ -95,6 +95,8 @@ class miaomiao(Star):
                 # noise_scale_w=0.6,
                 # length_scale=1.0
             )
+            if result is None or "audio_data" not in result:
+                raise ValueError("generate_audio 返回了无效的结果")
             chain = [
                 At(qq=event.get_sender_id()),  # At 消息发送者
                 Record(audio_base64=result["audio_data"])  # 发送语音消息

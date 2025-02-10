@@ -16,6 +16,7 @@ async def generate_audio(text, language, speaker, noise_scale=0.5, noise_scale_w
     ]
 
     try:
+        print("发送请求到 Hugging Face Space:", payload)
         result = await asyncio.to_thread(client.predict, *payload, api_name="/generate")
         
         # 打印调试信息
