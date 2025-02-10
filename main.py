@@ -95,6 +95,7 @@ class miaomiao(Star):
                 # noise_scale_w=0.6,
                 # length_scale=1.0
             )
+            print(f"generate_audio 返回结果: {result}")
             if result is None or "audio_data" not in result:
                 raise ValueError("generate_audio 返回了无效的结果")
             chain = [
