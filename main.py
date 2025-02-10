@@ -100,7 +100,7 @@ class miaomiao(Star):
                 raise ValueError("generate_audio 返回了无效的结果")
             chain = [
                 At(qq=event.get_sender_id()),  # At 消息发送者
-                Record(audio_base64=result["audio_file"])  # 发送语音消息
+                Record(file=result["audio_file"])  # 发送语音消息
             ]
             yield event.chain_result(chain)
             msg = Character_Name + "来信啦"
