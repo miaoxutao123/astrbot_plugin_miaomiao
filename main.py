@@ -74,6 +74,7 @@ class miaomiao(Star):
         yield event.plain_result(f"结果是: {a - b}")
 
     
+
     @llm_tool(name="gpt-sovits")
     async def gptsovits(self, event: AstrMessageEvent, Character_Name: str, tts_message: str):
         '''
@@ -84,20 +85,22 @@ class miaomiao(Star):
             tts_message(string): 需要转换的文本
         '''
         yield event.plain_result(f"喵喵人正在给{Character_Name}打电话，请稍等片刻。")
-        result = await generate_audio(
-            text=tts_message,  # 不超过100字的文本
-            language="中文",  # 语言代码
-            speaker=Character_Name  # 说话者名称
-            # 以下参数可选，保持None则使用API默认值
-            # noise_scale=0.5,
-            # noise_scale_w=0.6,
-            # length_scale=1.0
-        )
-        chain = [
-            At(qq=event.get_sender_id()),  # At 消息发送者
-            Record(audio_base64=result["audio_data"])  # 发送语音消息
-        ]
-        # self.context.send_message(event.unified_msg_origin, Record(audio_base64=result["audio_data"]))
-        yield event.chain_result(chain)
-        msg = Character_Name + "来信啦"
-        yield event.plain_result(msg)
+        try:
+            result = await generate_audio(
+                text=tts_message,  # 不超过100字的文本
+                language="中文",  # 语言代码
+                speaker=Character_Name  # 说话者名称
+                # 以下参数可选，保持None则使用API默认值
+                # noise_scale=0.5,
+                # noise_scale_w=0.6,
+                # length_scale=1.0
+            )
+            chain = [
+                At(qq=event.get_sender_id()),  # At 消息发送者
+                Record(audio_base64=result["audio_data"])  # 发送语音消息
+            ]
+            yield event.chain_result(chain)
+            msg = Character_Name + "来信啦"
+            yield event.plain_result(msg)
+        except Exception as e:
+            yield event.plain_result(f"请求失败: {str(e)}")
