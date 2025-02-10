@@ -1,9 +1,16 @@
 import base64
 from gradio_client import Client
 
-def generate_audio(text, language, speaker, noise_scale=0.5, noise_scale_w=0.5, length_scale=1.0):
-    client = Client("https://miaomiaoren-vits-uma-genshin-honkai.hf.space/")
-    
+async def generate_audio(text, language, speaker, noise_scale=0.5, noise_scale_w=0.5, length_scale=1.0):
+    try:
+        # 确保 URL 是合法的
+        url = "https://miaomiaoren-vits-uma-genshin-honkai.hf.space/"
+        client = Client(url)
+    except Exception as e:
+        print(f"无法连接到 Hugging Face Space，可能是 URL 无效或网络问题: {e}")
+        print("请检查 URL 的合法性，并确保网络连接正常。")
+        return {"message": "无法连接到 Hugging Face Space"}
+
     # 构造符合API要求的请求体
     payload = [
         text,          # 文本输入（可选）
@@ -47,21 +54,20 @@ def generate_audio(text, language, speaker, noise_scale=0.5, noise_scale_w=0.5, 
         message = "API请求失败: " + str(e)
         return {"message": message}
 
-# # 使用示例
-# if __name__ == "__main__":
-#     result = generate_audio(
-#         text="你好,这是一个测试文本",  # 不超过100字的文本
-#         language="中文",                # 语言代码
-#         speaker="胡桃"       # 说话者名称
-#         # 以下参数可选，保持None则使用API默认值
-#         # noise_scale=0.5,
-#         # noise_scale_w=0.6,
-#         # length_scale=1.0
-#     )
+# 使用示例
+if __name__ == "__main__":
+    result = generate_audio(
+        text="你好,这是一个测试文本",  # 不超过100字的文本
+        language="中文",                # 语言代码
+        speaker="胡桃"       # 说话者名称
+        # 以下参数可选，保持None则使用API默认值
+        # noise_scale=0.5,
+        # noise_scale_w=0.6,
+        # length_scale=1.0
+    )
 
-#     if result:
-#         print(f"生成耗时: {result['duration']}秒")
-#         print(f"输出信息: {result['message']}")
-#         print(f"附加信息: {result['extra_info']}")
-#         if result['audio_file']:
-#             print(f"音频已保存至: {result['audio_file']}")
+    if result:
+        print(f"输出信息: {result['message']}")
+        print(f"附加信息: {result['extra_info']}")
+        if result['audio_file']:
+            print(f"音频已保存至: {result['audio_file']}")
