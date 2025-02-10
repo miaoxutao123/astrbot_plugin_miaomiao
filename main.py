@@ -99,5 +99,6 @@ class miaomiao(Star):
         ]
         # self.context.send_message(event.unified_msg_origin, Record(audio_base64=result["audio_data"]))
         yield event.chain_result(chain)
-        return Character_Name + "来信啦"
+        msg = Character_Name + "来信啦"
+        return msg
 
