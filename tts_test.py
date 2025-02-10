@@ -22,20 +22,21 @@ def generate_audio(text, language, speaker, noise_scale=0.5, noise_scale_w=0.5, 
         
         # 解析响应数据
         output_message = result[0]
-        audio_base64 = result[1]
+        audio_file_path = result[1]
         extra_info = result[2]
-        duration = result[3]
+        duration = None  # 默认值
 
-        # 如果有音频数据则保存为文件
-        if audio_base64:
-            audio_data = base64.b64decode(audio_base64.split(",")[-1])
-            with open("output_audio.wav", "wb") as f:
-                f.write(audio_data)
+        # 如果有音频文件路径则读取文件并编码为base64
+        audio_base64 = None
+        if audio_file_path:
+            with open(audio_file_path, "rb") as f:
+                audio_data = f.read()
+                audio_base64 = base64.b64encode(audio_data).decode('utf-8')
 
         return {
             "message": output_message,
-            "audio_data": audio_base64,  # 保存为base64编码的字符串，用于前端播放"
-            "audio_file": "output_audio.wav" if audio_base64 else None,
+            "audio_data": audio_base64,  # 保存为base64编码的字符串，用于前端播放
+            "audio_file": audio_file_path if audio_base64 else None,
             "extra_info": extra_info,
             "duration": duration
         }
