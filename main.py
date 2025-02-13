@@ -4,6 +4,7 @@ import random
 from typing import AsyncGenerator
 from .tts_test import generate_audio 
 import os
+from PIL import Image as PILImage, ImageDraw as PILImageDraw, ImageFont as PILImageFont
 
 @register("miaomiao", "miaomiao", "喵喵开发的第一个插件", "1.0","https://github.com/miaoxutao123/astrbot_plugin_miaomiao")
 class miaomiao(Star):
@@ -59,7 +60,7 @@ class miaomiao(Star):
         user_name = event.get_sender_name()
         touzi_num = random.randint(1,6)
         yield event.plain_result(f"{user_name}扔出了{touzi_num}!") # 发送一条纯文本消息
-    
+        
 
     @llm_tool(name="gpt-sovits")
     async def gptsovits(self, event: AstrMessageEvent, Character_Name: str, tts_message: str):
@@ -107,3 +108,35 @@ class miaomiao(Star):
                 os.remove(audio_file)
         except Exception as e:
             yield event.plain_result(f"请求失败: {str(e)}")
+    
+    @filter.command("喜报")
+    async def congrats(self, message: AstrMessageEvent):
+        '''喜报生成器'''
+        msg = message.message_str.replace("喜报", "").strip()
+        for i in range(20, len(msg), 20):
+            msg = msg[:i] + "\n" + msg[i:]
+
+        path = os.path.abspath(os.path.dirname(__file__))
+        bg = path + "/congrats.jpg"
+        img = PILImage.open(bg)
+        draw = PILImageDraw.Draw(img)
+        font = PILImageFont.truetype(path + "/simhei.ttf", 65)
+
+        # Calculate the width and height of the text
+        text_width, text_height = draw.textbbox((0, 0), msg, font=font)[2:4]
+
+        # Calculate the starting position of the text to center it.
+        x = (img.size[0] - text_width) / 2
+        y = (img.size[1] - text_height) / 2
+
+        draw.text(
+            (x, y),
+            msg,
+            font=font,
+            fill=(255, 0, 0),
+            stroke_width=3,
+            stroke_fill=(255, 255, 0),
+        )
+
+        img.save("congrats_result.jpg")
+        return CommandResult().file_image("congrats_result.jpg")
