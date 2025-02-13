@@ -109,7 +109,7 @@ class miaomiao(Star):
         except Exception as e:
             yield event.plain_result(f"请求失败: {str(e)}")
     
-    @filter.command("喜报")
+    @command("喜报")
     async def congrats(self, message: AstrMessageEvent):
         '''喜报生成器'''
         msg = message.message_str.replace("喜报", "").strip()
