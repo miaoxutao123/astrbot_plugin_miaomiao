@@ -47,7 +47,7 @@ def generate_image(prompt,api_key,model="stabilityai/stable-diffusion-3-5-large"
 
 
 # # 示例调用
-# prompt = "an island near sea, with seagulls, moon shining over the sea, light house, boats int he background, fish flying over the sea"
-# api_key = "sk-ouhvzvowcvprcvfimnewjfvdarglryfdxhyrarshxzkzuqxx"
-# image_url, image_path = generate_image(prompt,api_key)
-# print(f"Image URL: {image_url}, Image Path: {image_path}")
+prompt = "A majestic, floating crystal cluster amidst swirling nebulae, bathed in starlight. This is the peak of Aetheria, the Zenith of Starlight, radiating magical energy. The image should have a fantastical, ethereal quality."
+api_key = "sk-ouhvzvowcvprcvfimnewjfvdarglryfdxhyrarshxzkzuqxx"
+image_url, image_path = generate_image(prompt,api_key)
+print(f"Image URL: {image_url}, Image Path: {image_path}")
