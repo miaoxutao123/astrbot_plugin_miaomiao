@@ -7,7 +7,7 @@ from .ttp import generate_image
 import os
 from PIL import Image as PILImage, ImageDraw as PILImageDraw, ImageFont as PILImageFont
 
-@register("miaomiao", "miaomiao", "喵喵开发的第一个插件", "1.0","https://github.com/miaoxutao123/astrbot_plugin_miaomiao")
+@register("miaomiao", "miaomiao", "喵喵开发的第一个插件", "1.1","https://github.com/miaoxutao123/astrbot_plugin_miaomiao")
 class miaomiao(Star):
     def __init__(self, context: Context,config: dict):
         super().__init__(context)
