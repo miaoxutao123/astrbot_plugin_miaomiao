@@ -4,5 +4,30 @@
         "type": "string",
         "hint": "请输入您部署的 Huggingface 服务 API 地址",
         "obvious_hint": true
+    },
+    "api_key": {
+        "description": "API 密钥",
+        "type": "string",
+        "hint": "请前往  https://cloud.siliconflow.cn/i/I2f0E3Az  注册账号，并获取 API_Key",
+        "default": "API_Key",
+        "obvious_hint": true
+    },
+    "model": {
+        "description": "使用的模型名称",
+        "type": "string",
+        "default": "black-forest-labs/FLUX.1-dev",
+        "hint": "AI模型的名称"
+    },
+    "num_inference_steps": {
+        "description": "推理步数",
+        "type": "int",
+        "default": 20,
+        "hint": "生成图片时的推理步数，数值越大生成质量越高但速度越慢"
+    },
+    "size": {
+        "description": "生成图片的分辨率",
+        "type": "string",
+        "default": "1024x1024",
+        "hint": "图片分辨率，格式为：宽x高，例如：1024x1024"
     }
 }

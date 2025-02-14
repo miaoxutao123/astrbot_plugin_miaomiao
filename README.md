@@ -32,5 +32,8 @@ https://github.com/miaoxutao123/astrbot_plugin_miaomiao
 ### gpt-sovits
 插件核心功能之一，使用gradio调用部署在huggingface space上的tts服务实现大模型自主调用指定角色的 TTS 语音功能，生成语音消息。
 
+### pic-gen
+插件核心功能之一，使用硅基流动的api生成图片，可接受llm调用
+
 ### 喜报生成器
 发送 `/喜报 {消息}` 指令，生成一张带有指定消息的喜报图片。(copy by https://github.com/Soulter/astrbot_plugin_essential)

@@ -3,13 +3,16 @@ import base64
 import random
 from typing import AsyncGenerator
 from .tts_test import generate_audio 
+from .ttp import generate_image
 import os
 from PIL import Image as PILImage, ImageDraw as PILImageDraw, ImageFont as PILImageFont
 
 @register("miaomiao", "miaomiao", "喵喵开发的第一个插件", "1.0","https://github.com/miaoxutao123/astrbot_plugin_miaomiao")
 class miaomiao(Star):
-    def __init__(self, context: Context):
+    def __init__(self, context: Context,config: dict):
         super().__init__(context)
+        self.api_key = config.get("api_key")
+        self.huggingface_api_url = config.get("huggingface_api_url")
     # 注册指令的装饰器。指令名为 helloworld。注册成功后，发送 `/helloworld` 就会触发这个指令，并回复 `你好, {user_name}!`
     @command("喵")
     async def miaomiaomiao(self, event: AstrMessageEvent):
@@ -79,7 +82,7 @@ class miaomiao(Star):
             Character_Name(string): 需要调用的tts角色名称
             tts_message(string): 需要转换的文本
         '''
-        url = "https://miaomiaoren-vits-uma-genshin-honkai.hf.space/"
+        url = self.huggingface_api_url
         yield event.plain_result(f"喵喵人正在给{Character_Name}打电话，请稍等片刻。")
         try:
             result = await generate_audio(
@@ -109,6 +112,21 @@ class miaomiao(Star):
         except Exception as e:
             yield event.plain_result(f"请求失败: {str(e)}")
     
+    @llm_tool(name="pic-gen")
+    async def pic_gen(self, event: AstrMessageEvent, prompt: str):
+        '''
+        When a user requires image generation or drawing, and asks you to create an image, Or when you need to create a drawing to demonstrate or present something to the user.
+        call this function. If the image description provided by the user is not in English, 
+        translate it into English and reformat it to facilitate generation by the stable-diffusion model.
+        Args:
+            prompt(string): image description
+        '''
+        api_key = self.api_key
+        yield event.plain_result(f"喵喵人正在用魔法画画，请稍等片刻。")
+        image_url, image_path = generate_image(prompt,api_key)
+        chain = [Image.fromURL(image_url)]
+        yield event.chain_result(chain)
+        
     @command("喜报")
     async def congrats(self, message: AstrMessageEvent):
         '''喜报生成器'''
