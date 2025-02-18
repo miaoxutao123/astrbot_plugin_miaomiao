@@ -227,7 +227,7 @@ class miaomiao(Star):
         image_url, image_path = generate_image(prompt,api_key)
         chain = [Image.fromURL(image_url)]
         yield event.chain_result(chain)
-        
+            
     @llm_tool(name="office")
     async def office_tool(self, event: AstrMessageEvent, doc_type: str, action: str, file_path: str, 
                         title: str = "", subtitle: str = "", content: str = "", 
