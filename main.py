@@ -4,6 +4,7 @@ import random
 from typing import AsyncGenerator
 from .tts_test import generate_audio 
 from .ttp import generate_image
+from .office import *
 import os
 from PIL import Image as PILImage, ImageDraw as PILImageDraw, ImageFont as PILImageFont
 import time
