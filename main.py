@@ -265,12 +265,35 @@ class miaomiao(Star):
             # 将 JSON 字符串解析为列表
             data = json.loads(data)
 
-            handle_document(doc_type, action, file_path, 
-                            title=title, subtitle=subtitle, content=content, 
-                            title_font=title_font, title_size=title_size, title_color=title_color,
-                            subtitle_font=subtitle_font, subtitle_size=subtitle_size, subtitle_color=subtitle_color,
-                            content_font=content_font, content_size=content_size, content_color=content_color,
-                            sheet_name=sheet_name, data=data)
+            # 根据文档类型过滤参数
+            if doc_type == 'word':
+                kwargs = {
+                    'file_path': file_path,
+                    'title': title,
+                    'subtitle': subtitle,
+                    'content': content,
+                    'title_font': title_font,
+                    'title_size': title_size,
+                    'title_color': title_color,
+                    'subtitle_font': subtitle_font,
+                    'subtitle_size': subtitle_size,
+                    'subtitle_color': subtitle_color,
+                    'content_font': content_font,
+                    'content_size': content_size,
+                    'content_color': content_color
+                }
+            elif doc_type == 'excel':
+                kwargs = {
+                    'file_path': file_path,
+                    'sheet_name': sheet_name,
+                    'title': title,
+                    'data': data,
+                    'title_font': title_font,
+                    'title_size': title_size,
+                    'title_color': title_color
+                }
+
+            handle_document(doc_type, action, **kwargs)
             chain = [
                     File(name=file_path, file=file_path),
                     Plain(f"{doc_type} 文档已成功 {action}!")
