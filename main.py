@@ -229,11 +229,11 @@ class miaomiao(Star):
         
     @llm_tool(name="office")
     async def office_tool(self, event: AstrMessageEvent, doc_type: str, action: str, file_path: str, 
-                        title: str = None, subtitle: str = None, content: str = None, 
+                        title: str , subtitle: str , content: str , 
+                        sheet_name: str, data: list,
                         title_font: str = 'Arial', title_size: int = 24, title_color: tuple = (0, 0, 0),
                         subtitle_font: str = 'Arial', subtitle_size: int = 18, subtitle_color: tuple = (0, 0, 0),
-                        content_font: str = 'Arial', content_size: int = 12, content_color: tuple = (0, 0, 0),
-                        sheet_name: str = None, data: list = None):
+                        content_font: str = 'Arial', content_size: int = 12, content_color: tuple = (0, 0, 0)):
         '''
         调用 office 处理函数来处理 Word 和 Excel 文档。
         Args:
