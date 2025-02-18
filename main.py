@@ -227,6 +227,44 @@ class miaomiao(Star):
         chain = [Image.fromURL(image_url)]
         yield event.chain_result(chain)
         
+    @llm_tool(name="office")
+    async def office_tool(self, event: AstrMessageEvent, doc_type: str, action: str, file_path: str, 
+                        title: str = None, subtitle: str = None, content: str = None, 
+                        title_font: str = 'Arial', title_size: int = 24, title_color: tuple = (0, 0, 0),
+                        subtitle_font: str = 'Arial', subtitle_size: int = 18, subtitle_color: tuple = (0, 0, 0),
+                        content_font: str = 'Arial', content_size: int = 12, content_color: tuple = (0, 0, 0),
+                        sheet_name: str = None, data: list = None):
+        '''
+        调用 office 处理函数来处理 Word 和 Excel 文档。
+        Args:
+            doc_type (str): 文档类型 ('word' 或 'excel')
+            action (str): 操作类型 ('create' 或 'modify')
+            file_path (str): 文件路径
+            title (str): 标题
+            subtitle (str): 副标题
+            content (str): 内容
+            title_font (str): 标题字体
+            title_size (int): 标题字号
+            title_color (tuple): 标题颜色
+            subtitle_font (str): 副标题字体
+            subtitle_size (int): 副标题字号
+            subtitle_color (tuple): 副标题颜色
+            content_font (str): 内容字体
+            content_size (int): 内容字号
+            content_color (tuple): 内容颜色
+            sheet_name (str): 表格名称 (仅用于 Excel)
+            data (list): 数据 (仅用于 Excel)
+        '''
+        try:
+            handle_document(doc_type, action, file_path, 
+                            title=title, subtitle=subtitle, content=content, 
+                            title_font=title_font, title_size=title_size, title_color=title_color,
+                            subtitle_font=subtitle_font, subtitle_size=subtitle_size, subtitle_color=subtitle_color,
+                            content_font=content_font, content_size=content_size, content_color=content_color,
+                            sheet_name=sheet_name, data=data)
+            yield event.plain_result(f"{doc_type} 文档已成功 {action}!")
+        except Exception as e:
+            yield event.plain_result(f"处理 {doc_type} 文档时出错: {str(e)}")
     @command("喜报")
     async def congrats(self, message: AstrMessageEvent):
         '''喜报生成器'''
