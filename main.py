@@ -231,32 +231,37 @@ class miaomiao(Star):
     @llm_tool(name="office")
     async def office_tool(self, event: AstrMessageEvent, doc_type: str, action: str, file_path: str, 
                         title: str = "", subtitle: str = "", content: str = "", 
-                        title_font: str = "", title_color: tuple = (0, 0, 0), subtitle_font: str = "", subtitle_color: tuple = (0, 0, 0),
-                        content_font: str = "", content_color: tuple = (0, 0, 0), sheet_name: str = "", data: list = None,
+                        title_font: str = "", title_color: str = "0,0,0", subtitle_font: str = "", subtitle_color: str = "0,0,0",
+                        content_font: str = "", content_color: str = "0,0,0", sheet_name: str = "", data: list = None,
                         title_size: int = 0, subtitle_size: int = 0, content_size: int = 0) -> MessageEventResult:
         '''
         调用 office 处理函数来处理 Word 和 Excel 文档。
         
         Args:
-            doc_type (str): 文档类型 ('word' 或 'excel')
-            action (str): 操作类型 ('create' 或 'modify')
-            file_path (str): 文件路径
-            title (str): 标题
-            subtitle (str): 副标题
-            content (str): 内容
-            title_font (str): 标题字体
-            title_size (int): 标题字号
-            title_color (tuple): 标题颜色
-            subtitle_font (str): 副标题字体
-            subtitle_size (int): 副标题字号
-            subtitle_color (tuple): 副标题颜色
-            content_font (str): 内容字体
-            content_size (int): 内容字号
-            content_color (tuple): 内容颜色
-            sheet_name (str): 表格名称 (仅用于 Excel)
-            data (list): 数据 (仅用于 Excel)
+            doc_type (string): 文档类型 ('word' 或 'excel')
+            action (string): 操作类型 ('create' 或 'modify')
+            file_path (string): 文件路径
+            title (string): 标题
+            subtitle (string): 副标题
+            content (string): 内容
+            title_font (string): 标题字体
+            title_size (number): 标题字号
+            title_color (string): 标题颜色 (格式: "R,G,B")
+            subtitle_font (string): 副标题字体
+            subtitle_size (number): 副标题字号
+            subtitle_color (string): 副标题颜色 (格式: "R,G,B")
+            content_font (string): 内容字体
+            content_size (number): 内容字号
+            content_color (string): 内容颜色 (格式: "R,G,B")
+            sheet_name (string): 表格名称 (仅用于 Excel)
+            data (array): 数据 (仅用于 Excel)
         '''
         try:
+            # 将颜色字符串解析为元组
+            title_color = tuple(map(int, title_color.split(',')))
+            subtitle_color = tuple(map(int, subtitle_color.split(',')))
+            content_color = tuple(map(int, content_color.split(',')))
+
             handle_document(doc_type, action, file_path, 
                             title=title, subtitle=subtitle, content=content, 
                             title_font=title_font, title_size=title_size, title_color=title_color,
@@ -265,7 +270,7 @@ class miaomiao(Star):
                             sheet_name=sheet_name, data=data)
             yield event.plain_result(f"{doc_type} 文档已成功 {action}!")
         except Exception as e:
-            yield event.plain_result(f"处理 {doc_type} 文档时出错: {str(e)}")
+            yield event.plain_result(f"处理 {doc_type} 文档时出错: {str(e)}")   
     @command("喜报")
     async def congrats(self, message: AstrMessageEvent):
         '''喜报生成器'''
