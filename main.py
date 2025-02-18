@@ -268,7 +268,11 @@ class miaomiao(Star):
                             subtitle_font=subtitle_font, subtitle_size=subtitle_size, subtitle_color=subtitle_color,
                             content_font=content_font, content_size=content_size, content_color=content_color,
                             sheet_name=sheet_name, data=data)
-            yield event.plain_result(f"{doc_type} 文档已成功 {action}!")
+            chain = [
+                    File(name=file_path, file=file_path),
+                    Plain(f"{doc_type} 文档已成功 {action}!")
+            ]
+            yield event.chain_result(chain)
         except Exception as e:
             yield event.plain_result(f"处理 {doc_type} 文档时出错: {str(e)}")   
     @command("喜报")
