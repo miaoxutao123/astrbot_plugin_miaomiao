@@ -9,7 +9,7 @@ import os
 from PIL import Image as PILImage, ImageDraw as PILImageDraw, ImageFont as PILImageFont
 import time
 
-@register("miaomiao", "miaomiao", "喵喵开发的第一个插件", "1.1","https://github.com/miaoxutao123/astrbot_plugin_miaomiao")
+@register("miaomiao", "miaomiao", "喵喵开发的第一个插件", "1.1.1","https://github.com/miaoxutao123/astrbot_plugin_miaomiao")
 class miaomiao(Star):
     def __init__(self, context: Context,config: dict):
         super().__init__(context)
@@ -232,7 +232,7 @@ class miaomiao(Star):
     async def office_tool(self, event: AstrMessageEvent, doc_type: str, action: str, file_path: str, 
                         title: str = "", subtitle: str = "", content: str = "", 
                         title_font: str = "", title_color: str = "0,0,0", subtitle_font: str = "", subtitle_color: str = "0,0,0",
-                        content_font: str = "", content_color: str = "0,0,0", sheet_name: str = "", data: list = None,
+                        content_font: str = "", content_color: str = "0,0,0", sheet_name: str = "", data: str = "[]",
                         title_size: int = 0, subtitle_size: int = 0, content_size: int = 0) -> MessageEventResult:
         '''
         调用 office 处理函数来处理 Word 和 Excel 文档。
@@ -254,13 +254,16 @@ class miaomiao(Star):
             content_size (number): 内容字号
             content_color (string): 内容颜色 (格式: "R,G,B")
             sheet_name (string): 表格名称 (仅用于 Excel)
-            data (array): 数据 (仅用于 Excel)
+            data (string): 数据 (仅用于 Excel)，JSON 字符串格式
         '''
         try:
             # 将颜色字符串解析为元组
             title_color = tuple(map(int, title_color.split(',')))
             subtitle_color = tuple(map(int, subtitle_color.split(',')))
             content_color = tuple(map(int, content_color.split(',')))
+
+            # 将 JSON 字符串解析为列表
+            data = json.loads(data)
 
             handle_document(doc_type, action, file_path, 
                             title=title, subtitle=subtitle, content=content, 
@@ -274,7 +277,7 @@ class miaomiao(Star):
             ]
             yield event.chain_result(chain)
         except Exception as e:
-            yield event.plain_result(f"处理 {doc_type} 文档时出错: {str(e)}")   
+            yield event.plain_result(f"处理 {doc_type} 文档时出错: {str(e)}")
     @command("喜报")
     async def congrats(self, message: AstrMessageEvent):
         '''喜报生成器'''
