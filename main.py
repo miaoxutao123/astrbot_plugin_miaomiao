@@ -233,7 +233,7 @@ class miaomiao(Star):
                         title: str = "", subtitle: str = "", content: str = "", 
                         title_font: str = "", title_color: str = "0,0,0", subtitle_font: str = "", subtitle_color: str = "0,0,0",
                         content_font: str = "", content_color: str = "0,0,0", sheet_name: str = "", data: str = "[]",
-                        title_size: int = 0, subtitle_size: int = 0, content_size: int = 0) -> MessageEventResult:
+                        title_size: int = 0, subtitle_size: int = 0, content_size: int = 0) :
         '''
         调用 office 处理函数来处理 Word 和 Excel 文档。
         
