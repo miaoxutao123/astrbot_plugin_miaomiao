@@ -236,7 +236,7 @@ class miaomiao(Star):
                         title_size: int = 0, subtitle_size: int = 0, content_size: int = 0) :
         '''
         调用 office 处理函数来处理 Word 和 Excel 文档。
-        
+        严格按照提供参数使用，不要传入多余的参数。
         Args:
             doc_type (string): 文档类型 (必填，'word' 或 'excel')
             action (string): 操作类型 (必填，'create' 或 'modify')
