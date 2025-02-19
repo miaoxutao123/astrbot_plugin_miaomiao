@@ -238,8 +238,8 @@ class miaomiao(Star):
         调用 office 处理函数来处理 Word 和 Excel 文档。
         
         Args:
-            doc_type (string): 文档类型 ('word' 或 'excel')
-            action (string): 操作类型 ('create' 或 'modify')
+            doc_type (string): 文档类型 (必填'word' 或 'excel')
+            action (string): 操作类型 (必填'create' 或 'modify')
             file_path (string): 文件路径（必填，直接写文件名）
             title (string): 标题
             subtitle (string): 副标题
