@@ -14,23 +14,26 @@ def create_word_document(file_path, title, subtitle, content,
     
     title_paragraph = doc.add_heading(title, level=1)
     title_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    title_run = title_paragraph.runs[0]
-    title_run.font.name = title_font
-    title_run.font.size = Pt(title_size)
-    title_run.font.color.rgb = RGBColor(*title_color)
+    if title_paragraph.runs:
+        title_run = title_paragraph.runs[0]
+        title_run.font.name = title_font
+        title_run.font.size = Pt(title_size)
+        title_run.font.color.rgb = RGBColor(*title_color)
 
     subtitle_paragraph = doc.add_heading(subtitle, level=2)
     subtitle_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    subtitle_run = subtitle_paragraph.runs[0]
-    subtitle_run.font.name = subtitle_font
-    subtitle_run.font.size = Pt(subtitle_size)
-    subtitle_run.font.color.rgb = RGBColor(*subtitle_color)
+    if subtitle_paragraph.runs:
+        subtitle_run = subtitle_paragraph.runs[0]
+        subtitle_run.font.name = subtitle_font
+        subtitle_run.font.size = Pt(subtitle_size)
+        subtitle_run.font.color.rgb = RGBColor(*subtitle_color)
 
     content_paragraph = doc.add_paragraph(content)
-    content_run = content_paragraph.runs[0]
-    content_run.font.name = content_font
-    content_run.font.size = Pt(content_size)
-    content_run.font.color.rgb = RGBColor(*content_color)
+    if content_paragraph.runs:
+        content_run = content_paragraph.runs[0]
+        content_run.font.name = content_font
+        content_run.font.size = Pt(content_size)
+        content_run.font.color.rgb = RGBColor(*content_color)
 
     doc.save(file_path)
 
