@@ -261,9 +261,9 @@ class miaomiao(Star):
             title_color = tuple(map(int, title_color.split(',')))
             subtitle_color = tuple(map(int, subtitle_color.split(',')))
             content_color = tuple(map(int, content_color.split(',')))
-
-            # 将 JSON 字符串解析为列表
-            data = json.loads(data)
+            if data:
+                # 将 JSON 字符串解析为列表
+                data = json.loads(data)
 
             # 根据文档类型过滤参数
             if doc_type == 'word':
