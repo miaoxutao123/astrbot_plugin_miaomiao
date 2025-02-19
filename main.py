@@ -238,8 +238,8 @@ class miaomiao(Star):
         调用 office 处理函数来处理 Word 和 Excel 文档。
         
         Args:
-            doc_type (string): 文档类型 (必填'word' 或 'excel')
-            action (string): 操作类型 (必填'create' 或 'modify')
+            doc_type (string): 文档类型 (必填，'word' 或 'excel')
+            action (string): 操作类型 (必填，'create' 或 'modify')
             file_path (string): 文件路径（必填，直接写文件名）
             title (string): 标题
             subtitle (string): 副标题
@@ -300,7 +300,7 @@ class miaomiao(Star):
             ]
             yield event.chain_result(chain)
         except Exception as e:
-            yield event.plain_result(f"处理 {doc_type} 文档时出错: {str(e)}")
+            yield event.plain_result(f"处理 {doc_type} 文档时出错: {str(e)}")    
     @command("喜报")
     async def congrats(self, message: AstrMessageEvent):
         '''喜报生成器'''
