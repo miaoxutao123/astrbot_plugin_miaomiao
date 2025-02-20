@@ -250,7 +250,7 @@ class miaomiao(Star):
         Args:
             doc_type (string): 文档类型 (必填，'word' 或 'excel')
             action (string): 操作类型 (必填，'create' 或 'modify')
-            file_path (string): 文件路径（必填，格式为:gen_doc/文件名）
+            file_path (string): 文件路径（必填，格式为:gen_doc/文件名.扩展名）
             title (string): 标题
             subtitle (string): 副标题
             content (string): 内容
