@@ -8,6 +8,14 @@ from .office import *
 import os
 from PIL import Image as PILImage, ImageDraw as PILImageDraw, ImageFont as PILImageFont
 import time
+import matplotlib.font_manager as fm
+
+def get_valid_font(font_name, default_font="Arial"):
+    available_fonts = [f.name for f in fm.fontManager.ttflist]
+    if font_name in available_fonts:
+        return font_name
+    else:
+        return default_font
 
 @register("miaomiao", "miaomiao", "喵喵开发的第一个插件", "1.1.1","https://github.com/miaoxutao123/astrbot_plugin_miaomiao")
 class miaomiao(Star):
@@ -227,7 +235,9 @@ class miaomiao(Star):
         image_url, image_path = generate_image(prompt,api_key)
         chain = [Image.fromURL(image_url)]
         yield event.chain_result(chain)
-            
+    
+
+    
     @llm_tool(name="office")
     async def office_tool(self, event: AstrMessageEvent, doc_type: str, action: str, file_path: str, 
                         title: str = "", subtitle: str = "", content: str = "", 
@@ -257,6 +267,11 @@ class miaomiao(Star):
             data (string): 数据 (仅用于 Excel)，JSON 字符串格式
         '''
         try:
+            # 检查并获取有效的字体
+            title_font = get_valid_font(title_font, "Arial")
+            subtitle_font = get_valid_font(subtitle_font, "Arial")
+            content_font = get_valid_font(content_font, "Arial")
+
             # 将颜色字符串解析为元组
             title_color = tuple(map(int, title_color.split(',')))
             subtitle_color = tuple(map(int, subtitle_color.split(',')))
@@ -300,7 +315,7 @@ class miaomiao(Star):
             ]
             yield event.chain_result(chain)
         except Exception as e:
-            yield event.plain_result(f"处理 {doc_type} 文档时出错: {str(e)}")    
+            yield event.plain_result(f"处理 {doc_type} 文档时出错: {str(e)}")
     @command("喜报")
     async def congrats(self, message: AstrMessageEvent):
         '''喜报生成器'''
