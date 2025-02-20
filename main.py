@@ -250,7 +250,7 @@ class miaomiao(Star):
         Args:
             doc_type (string): 文档类型 (必填，'word' 或 'excel')
             action (string): 操作类型 (必填，'create' 或 'modify')
-            file_path (string): 文件路径（必填，直接写文件名）
+            file_path (string): 文件路径（必填，格式为:gen_doc/文件名）
             title (string): 标题
             subtitle (string): 副标题
             content (string): 内容
@@ -307,10 +307,10 @@ class miaomiao(Star):
                     'title_size': title_size,
                     'title_color': title_color
                 }
-
+            print("正在处理文档...")
             handle_document(doc_type, action, **kwargs)
             chain = [
-                    File(name=file_path, file=file_path),
+                    File(file=file_path),
                     Plain(f"{doc_type} 文档已成功 {action}!")
             ]
             yield event.chain_result(chain)
