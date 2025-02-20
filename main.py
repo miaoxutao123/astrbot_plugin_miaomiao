@@ -237,36 +237,20 @@ class miaomiao(Star):
         yield event.chain_result(chain)
     
 
-    
+        
     @llm_tool(name="office")
     async def office_tool(self, event: AstrMessageEvent, doc_type: str, action: str, file_path: str, 
                         title: str = "", subtitle: str = "", content: str = "", 
                         title_font: str = "", title_color: str = "0,0,0", subtitle_font: str = "", subtitle_color: str = "0,0,0",
                         content_font: str = "", content_color: str = "0,0,0", sheet_name: str = "", data: str = "[]",
                         title_size: int = 0, subtitle_size: int = 0, content_size: int = 0) :
-        '''
-        调用 office 处理函数来处理 Word 和 Excel 文档。
-        严格按照提供参数使用，不要传入多余的参数，字体服务尚未成功构建，请勿传入字体参数。
-        Args:
-            doc_type (string): 文档类型 (必填，'word' 或 'excel')
-            action (string): 操作类型 (必填，'create' 或 'modify')
-            file_path (string): 文件路径（必填，格式为:gen_doc/文件名.扩展名）
-            title (string): 标题
-            subtitle (string): 副标题
-            content (string): 内容
-            title_font (string): 标题字体
-            title_size (number): 标题字号
-            title_color (string): 标题颜色 (格式: "R,G,B")
-            subtitle_font (string): 副标题字体
-            subtitle_size (number): 副标题字号
-            subtitle_color (string): 副标题颜色 (格式: "R,G,B")
-            content_font (string): 内容字体
-            content_size (number): 内容字号
-            content_color (string): 内容颜色 (格式: "R,G,B")
-            sheet_name (string): 表格名称 (仅用于 Excel)
-            data (string): 数据 (仅用于 Excel)，JSON 字符串格式
-        '''
+        ...
         try:
+            # 检查并创建文件夹
+            folder_path = os.path.dirname(file_path)
+            if not os.path.exists(folder_path):
+                os.makedirs(folder_path)
+
             # 检查并获取有效的字体
             title_font = get_valid_font(title_font, "Arial")
             subtitle_font = get_valid_font(subtitle_font, "Arial")
