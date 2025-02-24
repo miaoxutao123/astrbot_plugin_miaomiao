@@ -287,8 +287,8 @@ class miaomiao(Star):
 
             # 根据文档类型过滤参数
             if doc_type == 'word':
-                # 去掉前面的data/plugins/astrbot_plugin_miaomiao/部分
-                file_path = file_path.replace("data/plugins/astrbot_plugin_miaomiao/", "")
+                # # 去掉前面的data/plugins/astrbot_plugin_miaomiao/部分
+                # file_path = file_path.replace("data/plugins/astrbot_plugin_miaomiao/", "")
                 kwargs = {
                     'file_path': file_path,
                     'title': title,
@@ -305,8 +305,8 @@ class miaomiao(Star):
                     'content_color': content_color
                 }
             elif doc_type == 'excel':
-                # 去掉前面的data/plugins/astrbot_plugin_miaomiao/部分
-                file_path = file_path.replace("data/plugins/astrbot_plugin_miaomiao/", "")
+                # # 去掉前面的data/plugins/astrbot_plugin_miaomiao/部分
+                # file_path = file_path.replace("data/plugins/astrbot_plugin_miaomiao/", "")
                 kwargs = {
                     'file_path': file_path,
                     'sheet_name': sheet_name,
