@@ -318,9 +318,12 @@ class miaomiao(Star):
                     File(file=file_path)
             ]
             yield event.chain_result(chain)
-            return f"{doc_type} 文档已成功 {action}!"
+            rrr = f"{doc_type} 文档已成功 {action}!"
+            return rrr
         except Exception as e:
-            return f"处理 {doc_type} 文档时出错: {str(e)}"
+            rrr = f"处理 {doc_type} 文档时出错: {str(e)}"
+            return rrr
+            
     @command("喜报")
     async def congrats(self, message: AstrMessageEvent):
         '''喜报生成器'''
