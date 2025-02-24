@@ -324,7 +324,7 @@ class miaomiao(Star):
             file_name = os.path.basename(file_path)
             file_dir = os.path.dirname(file_path)
             chain = [
-                File(file=file_name, dir=file_dir)
+                File(name=file_name, file=file_dir)
             ]
             yield event.chain_result(chain)
             print("文件发送完成！")
