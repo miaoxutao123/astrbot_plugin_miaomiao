@@ -318,10 +318,10 @@ class miaomiao(Star):
                     File(file=file_path)
             ]
             yield event.chain_result(chain)
-            rrr = f"{doc_type} 文档已成功 {action}!"
+            rrr = doc_type +"文档已成功!" + action
             return rrr
         except Exception as e:
-            rrr = f"处理 {doc_type} 文档时出错: {str(e)}"
+            rrr = "处理 "+doc_type+"文档时出错:" + str(e)
             return rrr
             
     @command("喜报")
