@@ -318,7 +318,8 @@ class miaomiao(Star):
                 }
             print("正在处理文档...")
             handle_document(doc_type, action, **kwargs)
-            print("文档处理完成！长在尝试发送文件...")
+            print("文档处理完成！正在尝试发送文件...")
+            print(f"当前目录地址: {os.getcwd()}")
             chain = [
                     File(file=file_path)
             ]

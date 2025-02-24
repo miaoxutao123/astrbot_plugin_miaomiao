@@ -13,7 +13,7 @@ def create_word_document(file_path, title, subtitle, content,
                          content_font='Arial', content_size=12, content_color=(0, 0, 0)):
     try:
         doc = Document()
-        print(f"当前目录地址: {os.getcwd()}")
+        # print(f"当前目录地址: {os.getcwd()}")
         title_paragraph = doc.add_heading(title, level=1)
         title_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
         if title_paragraph.runs:
