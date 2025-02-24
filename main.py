@@ -79,7 +79,7 @@ class miaomiao(Star):
     async def gptsovits(self, event: AstrMessageEvent, Character_Name: str, tts_message: str):
         '''
         When the user wants to hear a specific character's voice, or wants to engage in a voice conversation or ask questions to a specific character, call this function.
-        When the user initiates a voice conversation with a character, first search online and consider how the character would respond to the query, then generate a response in Chinese exclusively. The response must be in Chinese (to ensure compatibility with the TTS service), as concise as possible, and must not exceed 100 words. If the request fails, inform the user of the reason for the failure.
+        When the user initiates a voice conversation with a character, first search online and consider how the character would respond to the query, then generate a response in Chinese exclusively. The response must be in Chinese (to ensure compatibility with the TTS service), as concise as possible, and must not exceed 100 words. The response should be narrated in the first person, as if the character is speaking. If the request fails, inform the user of the reason for the failure.
         Available characters are limited to:派蒙、神里绫华（龟龟）、琴、空（空哥）、丽莎、荧（荧妹）、
         芭芭拉、凯亚、迪卢克、雷泽、安柏、温迪、香菱、北斗、行秋、魈、凝光、可莉、钟离、
         菲谢尔（皇女）、班尼特、达达利亚（公子）、诺艾尔（女仆）、七七、重云、甘雨（椰羊）、
@@ -122,7 +122,7 @@ class miaomiao(Star):
             yield event.plain_result(f"请求失败: {str(e)}")
     
     @llm_tool(name="pic-gen")
-    async def pic_gen(self, event: AstrMessageEvent, prompt: str):
+    async def pic_gen(self, event: AstrMessageEvent, prompt: str) -> str:
         '''
         When a user requires image generation or drawing, and asks you to create an image, Or when you need to create a drawing to demonstrate or present something to the user.
         call this function. If the image description provided by the user is not in English, 
@@ -132,106 +132,106 @@ class miaomiao(Star):
         '''
         api_key = self.api_key
         # yield event.plain_result("（喵喵人正翘着尾巴，用魔法羽毛笔在空中画画呢~铃铛叮当作响，尾巴尖冒出小烟花。）")
-        chains = [
-                [
-                    Plain("(喵喵人正翘着尾巴，用魔法羽毛笔在空中画画呢~铃铛叮当作响，尾巴尖冒出小烟花。)"),
-                    Plain("稍等片刻喵！" ),
-                    Plain("ฅ^•ω•^ฅ"),
-                    Plain("（进度：■■■■□ 80%）")
-                ],
-                [
-                    Plain("(喵喵人项圈上的铃铛轻响，它正用发光的尾巴尖在空中作画呢！)"),
-                    Plain("马上就好喵~"),
-                    Plain("ฅ(^◕ᴥ◕^)ฅ"),
-                    Plain("（进度：■■■□□ 60%）")
-                ],
-                [
-                    Plain("(喵喵人悬浮在半空，肉垫一挥变出魔法画笔。)"),
-                    Plain("让本喵施展一下艺术魔法~稍等哦！"),
-                    Plain("✨🖌️"),
-                    Plain("（进度：■■■■■ 95%）")
-                ],
-                [
-                    Plain("(喵喵人正忙着用尾巴卷着魔法笔，在空中画着会动的图案。)"),
-                    Plain("再给本喵三秒！"),
-                    Plain("⚡️🎨"),
-                    Plain("（进度：■■□□□ 40%）")
-                ],
-                [
-                    Plain("(喵喵人眼睛闪着星光，项圈上的铃铛自动摇晃。)"),
-                    Plain("正在调用千镜图书馆的艺术资料库喵~"),
-                    Plain("📚✨"),
-                    Plain("（进度：■■■■□ 85%）")
-                ],
-                [
-                    Plain("(喵喵人竖起耳朵，变出七彩魔法笔。)"),
-                    Plain("启动艺术创作协议~"),
-                    Plain("🌈🖌️"),
-                    Plain("（进度：■■■□□ 55%）")
-                ],
-                [
-                    Plain("(喵喵人抖了抖耳朵，从项圈里抽出一支星光画笔。)"),
-                    Plain("让本喵施展终极绘画魔法！叮叮当当~"),
-                    Plain("🌟🎨"),
-                    Plain("（进度：■■□□□ 30%）")
-                ],
-                [
-                    Plain("(喵喵人晃着尾巴，变出会飘浮的调色盘。)"),
-                    Plain("喵喵正在帮忙调颜料呢！艺术创作进行中~"),
-                    Plain("🎨✨"),
-                    Plain("（进度：■■■■□ 75%）")
-                ],
-                [
-                    Plain("(喵喵人眼睛变成星星状。)"),
-                    Plain("启动绘画模式！尾巴魔法笔准备就绪~"),
-                    Plain("✏️💫"),
-                    Plain("（进度：■■□□□ 45%）")
-                ],
-                [
-                    Plain("(喵喵人用肉垫打了个响指，变出魔法画布。)"),
-                    Plain("让本喵施展一下祖传的喵派艺术！"),
-                    Plain("🖼️🐾"),
-                    Plain("（进度：■■■■■ 90%）")
-                ],
-                [
-                    Plain("(喵喵人竖起尾巴，项圈铃铛自动奏乐。)"),
-                    Plain("绘画魔法启动！请欣赏本喵的即兴创作~"),
-                    Plain("🎶🎨"),
-                    Plain("（进度：■■■□□ 65%）")
-                ],
-                [
-                    Plain("(喵喵人眨眨眼，变出七彩魔法墨水。)"),
-                    Plain("检测到艺术能量波动！正在绘制跨次元杰作~"),
-                    Plain("🌈🖌️"),
-                    Plain("（进度：■■□□□ 50%）")
-                ],
-                [
-                    Plain("(喵喵人漂浮旋转，尾巴画出光之轨迹。)"),
-                    Plain("让本喵用星辉之巅的秘法为你作画！"),
-                    Plain("✨🎨"),
-                    Plain("（进度：■■■■□ 80%）")
-                ],
-                [
-                    Plain("(喵喵人变出会发光的魔法眼镜。)"),
-                    Plain("喵呜~启动千镜图书馆艺术模块！正在加载创意数据~"),
-                    Plain("📚👓"),
-                    Plain("（进度：■■■□□ 70%）")
-                ],
-                [
-                    Plain("(喵喵人抖了抖毛，变出迷你魔法画架。)"),
-                    Plain("让本喵施展一下祖传的尾巴绘画术！"),
-                    Plain("🖼️🐾"),
-                    Plain("（进度：■■□□□ 35%）")
-                ],
-                [
-                    Plain("(喵喵人用铃铛召唤出魔法颜料。)"),
-                    Plain("叮叮当当~正在创作会动的画作哦！"),
-                    Plain("🎨✨"),
-                    Plain("（进度：■■■■■ 99%）")
-                ]
-            ]
-        selected_chain = random.choice(chains)
-        yield event.chain_result(selected_chain)
+        # chains = [
+        #         [
+        #             Plain("(喵喵人正翘着尾巴，用魔法羽毛笔在空中画画呢~铃铛叮当作响，尾巴尖冒出小烟花。)"),
+        #             Plain("稍等片刻喵！" ),
+        #             Plain("ฅ^•ω•^ฅ"),
+        #             Plain("（进度：■■■■□ 80%）")
+        #         ],
+        #         [
+        #             Plain("(喵喵人项圈上的铃铛轻响，它正用发光的尾巴尖在空中作画呢！)"),
+        #             Plain("马上就好喵~"),
+        #             Plain("ฅ(^◕ᴥ◕^)ฅ"),
+        #             Plain("（进度：■■■□□ 60%）")
+        #         ],
+        #         [
+        #             Plain("(喵喵人悬浮在半空，肉垫一挥变出魔法画笔。)"),
+        #             Plain("让本喵施展一下艺术魔法~稍等哦！"),
+        #             Plain("✨🖌️"),
+        #             Plain("（进度：■■■■■ 95%）")
+        #         ],
+        #         [
+        #             Plain("(喵喵人正忙着用尾巴卷着魔法笔，在空中画着会动的图案。)"),
+        #             Plain("再给本喵三秒！"),
+        #             Plain("⚡️🎨"),
+        #             Plain("（进度：■■□□□ 40%）")
+        #         ],
+        #         [
+        #             Plain("(喵喵人眼睛闪着星光，项圈上的铃铛自动摇晃。)"),
+        #             Plain("正在调用千镜图书馆的艺术资料库喵~"),
+        #             Plain("📚✨"),
+        #             Plain("（进度：■■■■□ 85%）")
+        #         ],
+        #         [
+        #             Plain("(喵喵人竖起耳朵，变出七彩魔法笔。)"),
+        #             Plain("启动艺术创作协议~"),
+        #             Plain("🌈🖌️"),
+        #             Plain("（进度：■■■□□ 55%）")
+        #         ],
+        #         [
+        #             Plain("(喵喵人抖了抖耳朵，从项圈里抽出一支星光画笔。)"),
+        #             Plain("让本喵施展终极绘画魔法！叮叮当当~"),
+        #             Plain("🌟🎨"),
+        #             Plain("（进度：■■□□□ 30%）")
+        #         ],
+        #         [
+        #             Plain("(喵喵人晃着尾巴，变出会飘浮的调色盘。)"),
+        #             Plain("喵喵正在帮忙调颜料呢！艺术创作进行中~"),
+        #             Plain("🎨✨"),
+        #             Plain("（进度：■■■■□ 75%）")
+        #         ],
+        #         [
+        #             Plain("(喵喵人眼睛变成星星状。)"),
+        #             Plain("启动绘画模式！尾巴魔法笔准备就绪~"),
+        #             Plain("✏️💫"),
+        #             Plain("（进度：■■□□□ 45%）")
+        #         ],
+        #         [
+        #             Plain("(喵喵人用肉垫打了个响指，变出魔法画布。)"),
+        #             Plain("让本喵施展一下祖传的喵派艺术！"),
+        #             Plain("🖼️🐾"),
+        #             Plain("（进度：■■■■■ 90%）")
+        #         ],
+        #         [
+        #             Plain("(喵喵人竖起尾巴，项圈铃铛自动奏乐。)"),
+        #             Plain("绘画魔法启动！请欣赏本喵的即兴创作~"),
+        #             Plain("🎶🎨"),
+        #             Plain("（进度：■■■□□ 65%）")
+        #         ],
+        #         [
+        #             Plain("(喵喵人眨眨眼，变出七彩魔法墨水。)"),
+        #             Plain("检测到艺术能量波动！正在绘制跨次元杰作~"),
+        #             Plain("🌈🖌️"),
+        #             Plain("（进度：■■□□□ 50%）")
+        #         ],
+        #         [
+        #             Plain("(喵喵人漂浮旋转，尾巴画出光之轨迹。)"),
+        #             Plain("让本喵用星辉之巅的秘法为你作画！"),
+        #             Plain("✨🎨"),
+        #             Plain("（进度：■■■■□ 80%）")
+        #         ],
+        #         [
+        #             Plain("(喵喵人变出会发光的魔法眼镜。)"),
+        #             Plain("喵呜~启动千镜图书馆艺术模块！正在加载创意数据~"),
+        #             Plain("📚👓"),
+        #             Plain("（进度：■■■□□ 70%）")
+        #         ],
+        #         [
+        #             Plain("(喵喵人抖了抖毛，变出迷你魔法画架。)"),
+        #             Plain("让本喵施展一下祖传的尾巴绘画术！"),
+        #             Plain("🖼️🐾"),
+        #             Plain("（进度：■■□□□ 35%）")
+        #         ],
+        #         [
+        #             Plain("(喵喵人用铃铛召唤出魔法颜料。)"),
+        #             Plain("叮叮当当~正在创作会动的画作哦！"),
+        #             Plain("🎨✨"),
+        #             Plain("（进度：■■■■■ 99%）")
+        #         ]
+        #     ]
+        # selected_chain = random.choice(chains)
+        # yield event.chain_result(selected_chain)
         image_url, image_path = generate_image(prompt,api_key)
         chain = [Image.fromURL(image_url)]
         yield event.chain_result(chain)
@@ -243,8 +243,29 @@ class miaomiao(Star):
                         title: str = "", subtitle: str = "", content: str = "", 
                         title_font: str = "", title_color: str = "0,0,0", subtitle_font: str = "", subtitle_color: str = "0,0,0",
                         content_font: str = "", content_color: str = "0,0,0", sheet_name: str = "", data: str = "[]",
-                        title_size: int = 0, subtitle_size: int = 0, content_size: int = 0) :
-        ...
+                        title_size: int = 0, subtitle_size: int = 0, content_size: int = 0) -> str:
+        '''
+        Call the office processing function to handle Word and Excel documents.
+        Use the provided parameters strictly, do not pass in extra parameters, the font service has not been successfully built, do not pass in font parameters.
+        Args:
+            doc_type (string): Document type (required, 'word' or 'excel')
+            action (string): Operation type (required, 'create' or 'modify')
+            file_path (string): File path (required, format: gen_doc/filename.extension)
+            title (string): Title
+            subtitle (string): Subtitle
+            content (string): Content
+            title_font (string): Title font
+            title_size (number): Title font size
+            title_color (string): Title color (format: "R,G,B")
+            subtitle_font (string): Subtitle font
+            subtitle_size (number): Subtitle font size
+            subtitle_color (string): Subtitle color (format: "R,G,B")
+            content_font (string): Content font
+            content_size (number): Content font size
+            content_color (string): Content color (format: "R,G,B")
+            sheet_name (string): Sheet name (only for Excel)
+            data (string): Data (only for Excel), JSON string format
+        '''
         try:
             # 检查并创建文件夹
             folder_path = os.path.dirname(file_path)
@@ -294,12 +315,12 @@ class miaomiao(Star):
             print("正在处理文档...")
             handle_document(doc_type, action, **kwargs)
             chain = [
-                    File(file=file_path),
-                    Plain(f"{doc_type} 文档已成功 {action}!")
+                    File(file=file_path)
             ]
             yield event.chain_result(chain)
+            return f"{doc_type} 文档已成功 {action}!"
         except Exception as e:
-            yield event.plain_result(f"处理 {doc_type} 文档时出错: {str(e)}")
+            return f"处理 {doc_type} 文档时出错: {str(e)}"
     @command("喜报")
     async def congrats(self, message: AstrMessageEvent):
         '''喜报生成器'''
