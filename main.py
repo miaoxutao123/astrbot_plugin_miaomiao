@@ -323,6 +323,8 @@ class miaomiao(Star):
             print(f"当前目录地址: {os.getcwd()}")
             file_name = os.path.basename(file_path)
             file_dir = os.path.dirname(file_path)
+            print(f"文件名: {file_name}")
+            print(f"文件目录: {file_dir}")
             chain = [
                 File(name=file_name, file=file_dir)
             ]
