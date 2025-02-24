@@ -3,6 +3,7 @@ from docx.shared import Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Font
+import os
 
 # Function to create a new Word document with title and subtitle
 # 创建一个带有标题和副标题的新Word文档的函数
@@ -12,7 +13,7 @@ def create_word_document(file_path, title, subtitle, content,
                          content_font='Arial', content_size=12, content_color=(0, 0, 0)):
     try:
         doc = Document()
-        
+        print(f"当前目录地址: {os.getcwd()}")
         title_paragraph = doc.add_heading(title, level=1)
         title_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
         if title_paragraph.runs:
