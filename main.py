@@ -319,10 +319,10 @@ class miaomiao(Star):
             ]
             yield event.chain_result(chain)
             rrr = doc_type +"文档已成功!" + action
-            return rrr
+            yield rrr
         except Exception as e:
             rrr = "处理 "+doc_type+"文档时出错:" + str(e)
-            return rrr
+            yield rrr
             
     @command("喜报")
     async def congrats(self, message: AstrMessageEvent):
