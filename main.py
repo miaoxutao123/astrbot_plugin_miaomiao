@@ -321,8 +321,10 @@ class miaomiao(Star):
             print("文档处理完成！正在尝试发送文件...")
             print(f"文件路径: {file_path}")
             print(f"当前目录地址: {os.getcwd()}")
+            file_name = os.path.basename(file_path)
+            file_dir = os.path.dirname(file_path)
             chain = [
-                    File(file=file_path)
+                File(file=file_name, dir=file_dir)
             ]
             yield event.chain_result(chain)
             print("文件发送完成！")
