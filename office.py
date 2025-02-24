@@ -82,16 +82,26 @@ def modify_excel_workbook(file_path, sheet_name, data):
 # General function to handle both Word and Excel documents
 # 通用函数来处理Word和Excel文档
 def handle_document(doc_type, action, file_path, **kwargs):
-    if doc_type == 'word':
-        if action == 'create':
-            create_word_document(file_path, **kwargs)
-        elif action == 'modify':
-            modify_word_document(file_path, **kwargs)
-    elif doc_type == 'excel':
-        if action == 'create':
-            create_excel_workbook(file_path, **kwargs)
-        elif action == 'modify':
-            modify_excel_workbook(file_path, **kwargs)
+    try:
+        if doc_type == 'word':
+            if action == 'create':
+                create_word_document(file_path, **kwargs)
+            elif action == 'modify':
+                modify_word_document(file_path, **kwargs)
+            else:
+                raise ValueError(f"Unsupported action '{action}' for document type 'word'")
+        elif doc_type == 'excel':
+            if action == 'create':
+                create_excel_workbook(file_path, **kwargs)
+            elif action == 'modify':
+                modify_excel_workbook(file_path, **kwargs)
+            else:
+                raise ValueError(f"Unsupported action '{action}' for document type 'excel'")
+        else:
+            raise ValueError(f"Unsupported document type '{doc_type}'")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        raise
 
 # Example usage of the functions
 # 函数的示例用法
@@ -131,3 +141,9 @@ def handle_document(doc_type, action, file_path, **kwargs):
 #         [10, 11, 12]
 #     ]
 # )
+doc_type = 'word'
+action = 'create'
+file_path = 'data/plugins/astrbot_plugin_miaomiao/gen_doc/ai_understanding.docx'
+file_path = file_path.replace("data/plugins/astrbot_plugin_miaomiao/", "")
+kwargs = {'file_path': file_path,  'title': 'AI 数字比较的误判', 'content': 'AI 在处理数字时，如果数据类型不正确或存在精度问题，可能会导致错误的比较结果。例如，如果数字被当作字符串处理，那么字符串的比较是从左到右逐位比较的，因此 "7.11" 会被认为小于 "7.8"，因为第一个不同的字符是 "1" 和 "8"，而 "1" 小于 "8"。此外，浮点数在计算机中的存储方式也可能导致精度损失，从而影响比较结果。', 'subtitle': '为什么 AI 认为 7.11 小于 7.8'}
+handle_document(doc_type, action, **kwargs)
