@@ -250,7 +250,7 @@ class miaomiao(Star):
         Args:
             doc_type (string): Document type (required, 'word' or 'excel')
             action (string): Operation type (required, 'create' or 'modify')
-            file_path (string): File path (required, format: gen_doc/filename.extension)
+            file_path (string): File path (required, format: data/plugins/astrbot_plugin_miaomiao/gen_doc/filename.extension)
             title (string): Title
             subtitle (string): Subtitle
             content (string): Content
