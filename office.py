@@ -131,10 +131,3 @@ def handle_document(doc_type, action, file_path, **kwargs):
 #         [10, 11, 12]
 #     ]
 # )
-doc_type = 'word'
-action = 'create'
-file_path = 'data/plugins/astrbot_plugin_miaomiao/gen_doc/ai_understanding.docx'
-file_path = file_path.replace("data/plugins/astrbot_plugin_miaomiao/", "")
-kwargs = {f'file_path': {file_path}, 'title': '为什么AI可能不懂7.11小于7.8', 'content': 'AI，尤其是早期的或未经充分训练的 AI 模型，可能会在理解浮点 数比较方面遇到困难，原因如下：\n\n1. **文本处理方式：** 某些 AI 模型，特别是那些主要处理文本的模型， 可能会将数字视为字符串而非数值。在这种情况下，它们会逐个字符地比较“7.11”和“7.8”，由于“1”大于“8”，因此可能错误地得出“7.11”大于“7.8”的结论。\n\n2. **缺乏数值理解：** 某些 AI 模型可能没有内置的数值比较机制。它们依赖于模式识别和关联，而不是真正的数值理解。\n\n3. **训练数据不足：** 如果 AI 模型在训练过程中 没有接触到足够多的浮点数比较示例，它可能无法正确地学习这种比较。\n\n4. **表示方式：** 浮点数在计算机 内部的表示方式可能导致精度问题。AI 模型需要正确地处理这些精度问题才能进行准确的比较。\n\n现代的、训练有素的 AI 模型通常能够正确地比较浮点数。但是，理解这些潜在的限制因素有助于我们更好地理解 AI 的工作原 理以及它可能出错的地方。'}
-
-handle_document(doc_type, action, **kwargs)
