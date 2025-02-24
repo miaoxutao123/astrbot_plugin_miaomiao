@@ -314,10 +314,12 @@ class miaomiao(Star):
                 }
             print("正在处理文档...")
             handle_document(doc_type, action, **kwargs)
+            print("文档处理完成！长在尝试发送文件...")
             chain = [
                     File(file=file_path)
             ]
             yield event.chain_result(chain)
+            print("文件发送完成！")
             rrr = doc_type +"文档已成功!" + action
             yield rrr
         except Exception as e:
