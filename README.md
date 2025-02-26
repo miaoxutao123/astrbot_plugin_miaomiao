@@ -36,7 +36,7 @@ https://github.com/miaoxutao123/astrbot_plugin_miaomiao
 插件核心功能之一，使用硅基流动的api生成图片，可接受llm调用
 
 ### music_search
-插件核心功能之一，使用API搜索歌曲信息。已注册llm组件，可以直接使用自然语言点歌
+插件核心功能之一，使用API搜索歌曲信息。已注册llm组件，可以直接使用自然语言点歌（fork from https://github.com/Hazellol/astrbot_plugin_music-search/blob/master/crawler.py）
 
 ### office_tool（仍在开发中）
 插件核心功能之一，处理Word和Excel文档。发送 `/office_tool {文档类型} {操作类型} {文件路径} {标题} {副标题} {内容}` 指令，机器人会创建或修改指定的Word或Excel文档。
