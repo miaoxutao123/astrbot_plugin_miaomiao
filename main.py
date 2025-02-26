@@ -9,7 +9,7 @@ import os
 from PIL import Image as PILImage, ImageDraw as PILImageDraw, ImageFont as PILImageFont
 import time
 import matplotlib.font_manager as fm
-
+from .get_song import search_song
 def get_valid_font(font_name, default_font="Arial"):
     available_fonts = [f.name for f in fm.fontManager.ttflist]
     if font_name in available_fonts:
@@ -236,7 +236,48 @@ class miaomiao(Star):
         chain = [Image.fromURL(image_url)]
         yield event.chain_result(chain)
     
-
+    @llm_tool(name="music_search")
+    async def music_search(self, event: AstrMessageEvent, music_name: str, singer: str, search_type: str = "qq") -> str:
+        '''
+        ues this tool when you think it's necessary or users need. Search for songs by song name and singer.
+        Args: 
+            music_name (string): The name of the song
+            singer (string): The name of the singer
+            search_type (string): The search engine to use (default: "qq",choose from "qq", "neteasy", "kugou", "kuwo")
+        '''
+        try:
+            # 调用 search_song 函数进行歌曲搜索
+            json_data = search_song(music_name, singer, search_type)
+            
+            if not json_data:
+                yield event.plain_result("未找到相关歌曲信息。")
+                return
+            
+            # 获取歌曲信息
+            songs = json_data.get("data", [])
+            if not songs:
+                yield event.plain_result("未找到相关歌曲信息。")
+                return
+            
+            # 构建返回消息
+            result_message = "找到以下歌曲信息：\n"
+            song = songs[0]
+            title = song.get("title", "未知歌曲")
+            author = song.get("author", "未知作者")
+            link = song.get("link", "无链接")
+            lrc = song.get("lrc", "无歌词")
+            download_url = song.get("url", "无下载链接")
+            pic = song.get("pic", "无封面图")
+            
+            chain = [
+                Plain(f"歌曲标题: {title}\n"),
+                Plain(f"作者: {author}\n"),
+                Image.fromURL(pic),
+                record(url = download_url),
+                ]
+            yield event.chain_result(chain)
+        except Exception as e:
+            yield event.plain_result(f"搜索歌曲时出错: {str(e)}")
         
     @llm_tool(name="office")
     async def office_tool(self, event: AstrMessageEvent, doc_type: str, action: str, file_path: str, 
