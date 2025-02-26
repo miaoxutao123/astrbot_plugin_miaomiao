@@ -10,6 +10,7 @@ from PIL import Image as PILImage, ImageDraw as PILImageDraw, ImageFont as PILIm
 import time
 import matplotlib.font_manager as fm
 from .get_song import search_song
+import requests
 def get_valid_font(font_name, default_font="Arial"):
     available_fonts = [f.name for f in fm.fontManager.ttflist]
     if font_name in available_fonts:
@@ -269,11 +270,28 @@ class miaomiao(Star):
             download_url = song.get("url", "无下载链接")
             pic = song.get("pic", "无封面图")
             
+            # 本地文件路径
+            file_path = "downloaded_song.m4a"
+
+            # 发送 GET 请求下载文件
+            response = requests.get(download_url, stream=True)
+
+            # 检查请求是否成功
+            if response.status_code == 200:
+                # 打开本地文件进行写入
+                with open(file_path, 'wb') as file:
+                    # 分块写入文件
+                    for chunk in response.iter_content(chunk_size=8192):
+                        file.write(chunk)
+                print(f"歌曲已成功下载并保存到 {file_path}")
+            else:
+                print(f"下载失败，状态码: {response.status_code}")
+
             chain = [
                 Plain(f"歌曲标题: {title}\n"),
                 Plain(f"作者: {author}\n"),
                 Image.fromURL(pic),
-                Record(url = download_url),
+                Record(file = file_path),
                 ]
             yield event.chain_result(chain)
         except Exception as e:
