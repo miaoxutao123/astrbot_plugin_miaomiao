@@ -35,5 +35,11 @@ https://github.com/miaoxutao123/astrbot_plugin_miaomiao
 ### pic-gen
 插件核心功能之一，使用硅基流动的api生成图片，可接受llm调用
 
+### music_search
+插件核心功能之一，使用API搜索歌曲信息。已注册llm组件，可以直接使用自然语言点歌
+
+### office_tool（仍在开发中）
+插件核心功能之一，处理Word和Excel文档。发送 `/office_tool {文档类型} {操作类型} {文件路径} {标题} {副标题} {内容}` 指令，机器人会创建或修改指定的Word或Excel文档。
+
 ### 喜报生成器
 发送 `/喜报 {消息}` 指令，生成一张带有指定消息的喜报图片。(copy by https://github.com/Soulter/astrbot_plugin_essential)

@@ -273,7 +273,7 @@ class miaomiao(Star):
                 Plain(f"歌曲标题: {title}\n"),
                 Plain(f"作者: {author}\n"),
                 Image.fromURL(pic),
-                record(url = download_url),
+                Record(url = download_url),
                 ]
             yield event.chain_result(chain)
         except Exception as e:
