@@ -2,7 +2,7 @@ import requests
 import json
 import time
 import random
-def generate_image(prompt,api_key,model="stabilityai/stable-diffusion-3-5-large",seed=None):
+def generate_image(prompt,api_key,model="stabilityai/stable-diffusion-3-5-large",seed=None,image_size = "1024x1024"):
     url = "https://api.siliconflow.cn/v1/images/generations"
 
     if seed is None:
@@ -11,7 +11,7 @@ def generate_image(prompt,api_key,model="stabilityai/stable-diffusion-3-5-large"
     payload = {
         "model": model,
         "prompt": prompt,
-        "image_size": "1024x1024",
+        "image_size": image_size,
         "seed": seed
     }
     headers = {

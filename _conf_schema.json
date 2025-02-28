@@ -15,14 +15,8 @@
     "model": {
         "description": "使用的模型名称",
         "type": "string",
-        "default": "black-forest-labs/FLUX.1-dev",
+        "default": "stabilityai/stable-diffusion-3-5-large",
         "hint": "AI模型的名称"
-    },
-    "num_inference_steps": {
-        "description": "推理步数",
-        "type": "int",
-        "default": 20,
-        "hint": "生成图片时的推理步数，数值越大生成质量越高但速度越慢"
     },
     "size": {
         "description": "生成图片的分辨率",

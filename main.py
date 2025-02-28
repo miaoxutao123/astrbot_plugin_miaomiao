@@ -24,6 +24,8 @@ class miaomiao(Star):
         super().__init__(context)
         self.api_key = config.get("api_key")
         self.huggingface_api_url = config.get("huggingface_api_url")
+        self.model = config.get("model")
+        self.image_size = config.get("image_size")
     # 注册指令的装饰器。指令名为 helloworld。注册成功后，发送 `/helloworld` 就会触发这个指令，并回复 `你好, {user_name}!`
     @command("喵")
     async def miaomiaomiao(self, event: AstrMessageEvent):
@@ -121,6 +123,15 @@ class miaomiao(Star):
                 os.remove(audio_file)
         except Exception as e:
             yield event.plain_result(f"请求失败: {str(e)}")
+
+    # @llm_tool("duckduckgo_web_search")
+    # async def search_from_search_engine(self, event: AstrMessageEvent, query: str) -> str:
+    #     '''Search the web for answers to the user's query
+        
+    #     Args:
+    #         query(string): A search query which will be used to fetch the most relevant snippets regarding the user's query
+    #     '''
+    #     return await search_from_search_engine(query)
     
     @llm_tool(name="pic-gen")
     async def pic_gen(self, event: AstrMessageEvent, prompt: str) -> str:
@@ -128,10 +139,13 @@ class miaomiao(Star):
         When a user requires image generation or drawing, and asks you to create an image, Or when you need to create a drawing to demonstrate or present something to the user.
         call this function. If the image description provided by the user is not in English, 
         translate it into English and reformat it to facilitate generation by the stable-diffusion model.
+        Enrich the prompt with additional details to achieve better results, the more detailed the better.
         Args:
             prompt(string): image description
         '''
         api_key = self.api_key
+        model = self.model
+        image_size = self.image_size
         # yield event.plain_result("（喵喵人正翘着尾巴，用魔法羽毛笔在空中画画呢~铃铛叮当作响，尾巴尖冒出小烟花。）")
         # chains = [
         #         [
@@ -233,18 +247,19 @@ class miaomiao(Star):
         #     ]
         # selected_chain = random.choice(chains)
         # yield event.chain_result(selected_chain)
-        image_url, image_path = generate_image(prompt,api_key)
+        image_url, image_path = generate_image(prompt,api_key,model=model,image_size=image_size)
         chain = [Image.fromURL(image_url)]
         yield event.chain_result(chain)
     
     @llm_tool(name="music_search")
     async def music_search(self, event: AstrMessageEvent, music_name: str, singer: str, search_type: str = "qq") -> str:
         '''
-        ues this tool when you think it's necessary or users need. Search for songs by song name and singer.
+        Use this tool when you think it's needed or users need. Search for songs by song name and singer.
+        Note: The song must be a real, existing song to avoid search errors.
         Args: 
             music_name (string): The name of the song
             singer (string): The name of the singer
-            search_type (string): The search engine to use (default: "qq",choose from "qq", "neteasy", "kugou", "kuwo")
+            search_type (string): The search engine to use (default: "qq", choose from "qq", "neteasy", "kugou", "kuwo")
         '''
         try:
             # 调用 search_song 函数进行歌曲搜索

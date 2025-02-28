@@ -60,6 +60,7 @@ def search_song(music_name, singer, search_type="qq", url="https://music.txqq.pr
     with open(file_path, 'w', encoding='utf-8') as json_file:
         json.dump(json_data, json_file, ensure_ascii=False, indent=4)
 
+    
     print("数据已保存到 'songs_data.json' 文件")
 
     # 打印歌曲信息
