@@ -35,7 +35,7 @@ https://github.com/miaoxutao123/astrbot_plugin_miaomiao
 插件核心功能之一，使用硅基流动的api生成图片，使用llm调用（没注册的可以用我的邀请连接谢谢喵https://cloud.siliconflow.cn/i/lYQ2rcwq）
 ![实现效果](pic-gen.png)
 
-### music_search
+### music_search(不稳定，正在尝试解决)
 插件核心功能之一，使用API搜索歌曲信息。已注册llm组件，可以直接使用自然语言点歌（fork from https://github.com/Hazellol/astrbot_plugin_music-search/blob/master/crawler.py）
 ![实现效果](getMusic.png)
 
