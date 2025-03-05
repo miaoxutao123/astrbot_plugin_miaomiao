@@ -395,7 +395,7 @@ class miaomiao(Star):
             print("文档处理完成！正在尝试发送文件...")
             print(f"文件路径: {file_path}")
             print(f"当前目录地址: {os.getcwd()}")
-            file_name = os.path.basename(file_path)
+            file_name = os.path.splitext(os.path.basename(file_path))[0]
             file_dir = os.path.dirname(file_path)
             print(f"文件名: {file_name}")
             print(f"文件目录: {file_dir}")
