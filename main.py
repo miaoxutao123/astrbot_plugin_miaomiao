@@ -400,7 +400,7 @@ class miaomiao(Star):
             print(f"文件名: {file_name}")
             print(f"文件目录: {file_dir}")
             chain = [
-                File(name=file_name, file=file_dir)
+                File(name=file_name, file=file_path)
             ]
             yield event.chain_result(chain)
             print("文件发送完成！")
