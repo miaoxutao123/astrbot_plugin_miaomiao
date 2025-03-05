@@ -408,6 +408,7 @@ class miaomiao(Star):
             yield rrr
         except Exception as e:
             rrr = "处理 "+doc_type+"文档时出错:" + str(e)
+            print(rrr)
             yield rrr
             
     @command("喜报")
