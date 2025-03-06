@@ -51,9 +51,9 @@ def recv_all(sock, n):
         data.extend(packet)
     return data
 
-# if __name__ == "__main__":
-#     file_path = input("请输入要发送的文件路径: ")
-#     if os.path.isfile(file_path):
-#         send_file(file_path)
-#     else:
-#         print("错误: 文件不存在")
+if __name__ == "__main__":
+    file_path = "D:\coding\code\python\astrbotplg\AstrBot\data\plugins\astrbot_plugin_miaomiao\getMusic.png"
+    if os.path.isfile(file_path):
+        send_file(file_path)
+    else:
+        print("错误: 文件不存在")

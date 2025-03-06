@@ -309,10 +309,8 @@ class miaomiao(Star):
                 file_dir = os.path.dirname(file_path)
                 print(f"文件名: {file_name}")
                 print(f"文件目录: {file_dir}")
-            chain = [
-                File(name=file_name, file=nap_file_path)
-            ]
-            yield event.chain_result(chain)
+            file = File(name=file_name, file=nap_file_path)
+            yield event.chain_result([file])
             print("文件发送完成！")
             rrr = doc_type +"文档已成功!" + action
             yield rrr
