@@ -11,6 +11,7 @@ import time
 import matplotlib.font_manager as fm
 from .get_song import search_song
 import requests
+from .file_send_server import send_file
 def get_valid_font(font_name, default_font="Arial"):
     available_fonts = [f.name for f in fm.fontManager.ttflist]
     if font_name in available_fonts:
@@ -26,6 +27,8 @@ class miaomiao(Star):
         self.huggingface_api_url = config.get("huggingface_api_url")
         self.model = config.get("model")
         self.image_size = config.get("image_size")
+        self.nap_server_address = config.get("nap_server_address")
+        self.nap_server_port = config.get("nap_server_port")
     # 注册指令的装饰器。指令名为 helloworld。注册成功后，发送 `/helloworld` 就会触发这个指令，并回复 `你好, {user_name}!`
     @command("喵")
     async def miaomiaomiao(self, event: AstrMessageEvent):
@@ -146,107 +149,6 @@ class miaomiao(Star):
         api_key = self.api_key
         model = self.model
         image_size = self.image_size
-        # yield event.plain_result("（喵喵人正翘着尾巴，用魔法羽毛笔在空中画画呢~铃铛叮当作响，尾巴尖冒出小烟花。）")
-        # chains = [
-        #         [
-        #             Plain("(喵喵人正翘着尾巴，用魔法羽毛笔在空中画画呢~铃铛叮当作响，尾巴尖冒出小烟花。)"),
-        #             Plain("稍等片刻喵！" ),
-        #             Plain("ฅ^•ω•^ฅ"),
-        #             Plain("（进度：■■■■□ 80%）")
-        #         ],
-        #         [
-        #             Plain("(喵喵人项圈上的铃铛轻响，它正用发光的尾巴尖在空中作画呢！)"),
-        #             Plain("马上就好喵~"),
-        #             Plain("ฅ(^◕ᴥ◕^)ฅ"),
-        #             Plain("（进度：■■■□□ 60%）")
-        #         ],
-        #         [
-        #             Plain("(喵喵人悬浮在半空，肉垫一挥变出魔法画笔。)"),
-        #             Plain("让本喵施展一下艺术魔法~稍等哦！"),
-        #             Plain("✨🖌️"),
-        #             Plain("（进度：■■■■■ 95%）")
-        #         ],
-        #         [
-        #             Plain("(喵喵人正忙着用尾巴卷着魔法笔，在空中画着会动的图案。)"),
-        #             Plain("再给本喵三秒！"),
-        #             Plain("⚡️🎨"),
-        #             Plain("（进度：■■□□□ 40%）")
-        #         ],
-        #         [
-        #             Plain("(喵喵人眼睛闪着星光，项圈上的铃铛自动摇晃。)"),
-        #             Plain("正在调用千镜图书馆的艺术资料库喵~"),
-        #             Plain("📚✨"),
-        #             Plain("（进度：■■■■□ 85%）")
-        #         ],
-        #         [
-        #             Plain("(喵喵人竖起耳朵，变出七彩魔法笔。)"),
-        #             Plain("启动艺术创作协议~"),
-        #             Plain("🌈🖌️"),
-        #             Plain("（进度：■■■□□ 55%）")
-        #         ],
-        #         [
-        #             Plain("(喵喵人抖了抖耳朵，从项圈里抽出一支星光画笔。)"),
-        #             Plain("让本喵施展终极绘画魔法！叮叮当当~"),
-        #             Plain("🌟🎨"),
-        #             Plain("（进度：■■□□□ 30%）")
-        #         ],
-        #         [
-        #             Plain("(喵喵人晃着尾巴，变出会飘浮的调色盘。)"),
-        #             Plain("喵喵正在帮忙调颜料呢！艺术创作进行中~"),
-        #             Plain("🎨✨"),
-        #             Plain("（进度：■■■■□ 75%）")
-        #         ],
-        #         [
-        #             Plain("(喵喵人眼睛变成星星状。)"),
-        #             Plain("启动绘画模式！尾巴魔法笔准备就绪~"),
-        #             Plain("✏️💫"),
-        #             Plain("（进度：■■□□□ 45%）")
-        #         ],
-        #         [
-        #             Plain("(喵喵人用肉垫打了个响指，变出魔法画布。)"),
-        #             Plain("让本喵施展一下祖传的喵派艺术！"),
-        #             Plain("🖼️🐾"),
-        #             Plain("（进度：■■■■■ 90%）")
-        #         ],
-        #         [
-        #             Plain("(喵喵人竖起尾巴，项圈铃铛自动奏乐。)"),
-        #             Plain("绘画魔法启动！请欣赏本喵的即兴创作~"),
-        #             Plain("🎶🎨"),
-        #             Plain("（进度：■■■□□ 65%）")
-        #         ],
-        #         [
-        #             Plain("(喵喵人眨眨眼，变出七彩魔法墨水。)"),
-        #             Plain("检测到艺术能量波动！正在绘制跨次元杰作~"),
-        #             Plain("🌈🖌️"),
-        #             Plain("（进度：■■□□□ 50%）")
-        #         ],
-        #         [
-        #             Plain("(喵喵人漂浮旋转，尾巴画出光之轨迹。)"),
-        #             Plain("让本喵用星辉之巅的秘法为你作画！"),
-        #             Plain("✨🎨"),
-        #             Plain("（进度：■■■■□ 80%）")
-        #         ],
-        #         [
-        #             Plain("(喵喵人变出会发光的魔法眼镜。)"),
-        #             Plain("喵呜~启动千镜图书馆艺术模块！正在加载创意数据~"),
-        #             Plain("📚👓"),
-        #             Plain("（进度：■■■□□ 70%）")
-        #         ],
-        #         [
-        #             Plain("(喵喵人抖了抖毛，变出迷你魔法画架。)"),
-        #             Plain("让本喵施展一下祖传的尾巴绘画术！"),
-        #             Plain("🖼️🐾"),
-        #             Plain("（进度：■■□□□ 35%）")
-        #         ],
-        #         [
-        #             Plain("(喵喵人用铃铛召唤出魔法颜料。)"),
-        #             Plain("叮叮当当~正在创作会动的画作哦！"),
-        #             Plain("🎨✨"),
-        #             Plain("（进度：■■■■■ 99%）")
-        #         ]
-        #     ]
-        # selected_chain = random.choice(chains)
-        # yield event.chain_result(selected_chain)
         image_url, image_path = generate_image(prompt,api_key,model=model,image_size=image_size)
         chain = [Image.fromURL(image_url)]
         yield event.chain_result(chain)
@@ -392,15 +294,23 @@ class miaomiao(Star):
                 }
             print("正在处理文档...")
             handle_document(doc_type, action, **kwargs)
-            print("文档处理完成！正在尝试发送文件...")
-            print(f"文件路径: {file_path}")
-            print(f"当前目录地址: {os.getcwd()}")
-            file_name = os.path.splitext(os.path.basename(file_path))[0]
-            file_dir = os.path.dirname(file_path)
-            print(f"文件名: {file_name}")
-            print(f"文件目录: {file_dir}")
+            if self.nap_server_address !="localhost":
+                print("文档处理完成！正在尝试发送文件到服务端...")
+                nap_file_path = send_file(file_path, HOST=self.nap_server_address, PORT=self.nap_server_port)
+                print(nap_file_path)
+                file_name = os.path.basename(file_path)
+                file_dir = os.path.dirname(file_path)
+                print(f"文件名: {file_name}")
+                print(f"文件目录: {file_dir}")
+            else :
+                print("文档处理完成！")
+                nap_file_path = file_path
+                file_name = os.path.basename(file_path)
+                file_dir = os.path.dirname(file_path)
+                print(f"文件名: {file_name}")
+                print(f"文件目录: {file_dir}")
             chain = [
-                File(name=file_name, file=file_path)
+                File(name=file_name, file=nap_file_path)
             ]
             yield event.chain_result(chain)
             print("文件发送完成！")
