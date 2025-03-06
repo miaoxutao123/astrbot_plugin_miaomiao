@@ -39,6 +39,7 @@ def send_file(filename, HOST, PORT):
                 return
             file_abs_path = file_abs_path_data.decode('utf-8')
             print(f"接收端文件绝对路径: {file_abs_path}")
+            return file_abs_path
     except Exception as e:
         print(f"传输失败: {e}")
 
@@ -51,9 +52,9 @@ def recv_all(sock, n):
         data.extend(packet)
     return data
 
-if __name__ == "__main__":
-    file_path = "D:\coding\code\python\astrbotplg\AstrBot\data\plugins\astrbot_plugin_miaomiao\getMusic.png"
-    if os.path.isfile(file_path):
-        send_file(file_path)
-    else:
-        print("错误: 文件不存在")
+# if __name__ == "__main__":
+#     file_path = input("请输入要发送的文件路径: ")
+#     if os.path.isfile(file_path):
+#         send_file(file_path)
+#     else:
+#         print("错误: 文件不存在")
