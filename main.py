@@ -221,8 +221,9 @@ class miaomiao(Star):
                         content_font: str = "", content_color: str = "0,0,0", sheet_name: str = "", data: str = "[]",
                         title_size: int = 0, subtitle_size: int = 0, content_size: int = 0) -> str:
         '''
-        Call the office processing function to handle Word and Excel documents.
-        Use the provided parameters strictly, do not pass in extra parameters, the font service has not been successfully built, do not pass in font parameters.
+        If the user requests that you generate or process an Office file, such as a Word or Excel document, 
+        you must strictly adhere to the specified parameters to call the office processing function. 
+        Do not pass in any additional parameters beyond those provided, as the font service has not been successfully built. Therefore, do not include any font-related parameters.
         Args:
             doc_type (string): Document type (required, 'word' or 'excel')
             action (string): Operation type (required, 'create' or 'modify')
