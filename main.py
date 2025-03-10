@@ -221,13 +221,16 @@ class miaomiao(Star):
                         content_font: str = "", content_color: str = "0,0,0", sheet_name: str = "", data: str = "[]",
                         title_size: int = 0, subtitle_size: int = 0, content_size: int = 0) -> str:
         '''
-        If the user requests that you generate or process an Office file, such as a Word or Excel document, 
-        you must strictly adhere to the specified parameters to call the office processing function. 
-        Do not pass in any additional parameters beyond those provided, as the font service has not been successfully built. Therefore, do not include any font-related parameters.
+        Avatar
+            If the user requests that you generate or process an Office file, such as a Word or Excel document, 
+            you must strictly adhere to the specified parameters to call the office processing function. Do not pass in any additional parameters beyond those provided,
+            as the font service has not been successfully built.
+            Therefore, do not include any font-related parameters.
+            Additionally, ensure that all content is generated in a single batch to avoid partial outputs or multiple iterations.
         Args:
             doc_type (string): Document type (required, 'word' or 'excel')
             action (string): Operation type (required, 'create' or 'modify')
-            file_path (string): File path (required, format: gen_doc/filename.extension)
+            file_path (string): File path (required, format: /data/plugins/astrbot_plugin_miaomiao/gen_doc/filename.extension)
             title (string): Title
             subtitle (string): Subtitle(required)
             content (string): Content
