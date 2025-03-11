@@ -382,7 +382,7 @@ class miaomiao(Star):
                 else :
                     nap_file_path = file_path
                 yield event.chain_result([
-                    Plain(f"作者昵称：{result['author_name']}\n视频简介：{result['video_description']}"),
+                    # Plain(f"作者昵称：{result['author_name']}\n视频简介：{result['video_description']}"),
                     Video(file=nap_file_path)
                 ])
             else:
