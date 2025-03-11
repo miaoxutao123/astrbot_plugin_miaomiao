@@ -71,12 +71,12 @@ def process_douyin_video(video_url):
         }
     return None
 
-if __name__ == "__main__":
-    video_url = input("请输入抖音视频链接：")
-    result = process_douyin_video(video_url)
-    if result:
-        print(f"视频已下载并保存到：{result['video_path']}")
-        print(f"作者昵称：{result['author_name']}")
-        print(f"视频描述：{result['video_description']}")
-    else:
-        print("视频下载失败")
+# if __name__ == "__main__":
+#     video_url = input("请输入抖音视频链接：")
+#     result = process_douyin_video(video_url)
+#     if result:
+#         print(f"视频已下载并保存到：{result['video_path']}")
+#         print(f"作者昵称：{result['author_name']}")
+#         print(f"视频描述：{result['video_description']}")
+#     else:
+#         print("视频下载失败")
