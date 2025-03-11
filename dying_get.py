@@ -55,10 +55,11 @@ def process_douyin_video(video_url):
     :return: 包含视频绝对地址、作者昵称和视频描述的字典
     """
     result = parse_douyin_video(video_url)
+    print(result)
     if result:
         video_download_url = result['data']['video_url']
-        author_name = result['data']['author_name']
-        video_description = result['data']['description']
+        author_name = result["data"]["additional_data"][0]["nickname"]
+        video_description = result["data"]["additional_data"][0]["desc"]
         save_dir = 'data/plugins/astrbot_plugin_miaomiao/download_videos/dy'
         os.makedirs(save_dir, exist_ok=True)
         save_path = os.path.join(save_dir, 'video.mp4')
@@ -70,12 +71,12 @@ def process_douyin_video(video_url):
         }
     return None
 
-# if __name__ == "__main__":
-#     video_url = input("请输入抖音视频链接：")
-#     result = process_douyin_video(video_url)
-#     if result:
-#         print(f"视频已下载并保存到：{result['video_path']}")
-#         print(f"作者昵称：{result['author_name']}")
-#         print(f"视频描述：{result['video_description']}")
-#     else:
-#         print("视频下载失败")
+if __name__ == "__main__":
+    video_url = input("请输入抖音视频链接：")
+    result = process_douyin_video(video_url)
+    if result:
+        print(f"视频已下载并保存到：{result['video_path']}")
+        print(f"作者昵称：{result['author_name']}")
+        print(f"视频描述：{result['video_description']}")
+    else:
+        print("视频下载失败")
