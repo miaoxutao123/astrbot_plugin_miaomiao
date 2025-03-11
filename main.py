@@ -24,7 +24,7 @@ def get_valid_font(font_name, default_font="Arial"):
     else:
         return default_font
 
-@register("miaomiao", "miaomiao", "喵喵开发的第一个插件", "1.2.1","https://github.com/miaoxutao123/astrbot_plugin_miaomiao")
+@register("miaomiao", "miaomiao", "喵喵开发的第一个插件", "1.2.2","https://github.com/miaoxutao123/astrbot_plugin_miaomiao")
 class miaomiao(Star):
     def __init__(self, context: Context,config: dict):
         super().__init__(context)
