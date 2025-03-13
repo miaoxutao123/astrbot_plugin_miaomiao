@@ -359,33 +359,4 @@ class miaomiao(Star):
 
         img.save("congrats_result.jpg")
         return CommandResult().file_image("congrats_result.jpg")
-    
-    @filter.event_message_type(EventMessageType.ALL)
-    async def auto_parse_dy(self, event: AstrMessageEvent):
-        """
-        自动检测消息中是否包含抖音分享链接，并解析。
-        """
-        message_str = event.message_str
-        match = re.search(r'(https?://v\.douyin\.com/[a-zA-Z0-9]+)', message_str)
-        if match:
-            url = match.group(1)
-            print(f"检测到抖音链接: {url}")  # 添加日志记录
-            result = process_douyin_video(url)
-            if result:
-                file_path = result['video_path']
-                # chain = [
-                #     Plain(f"作者昵称：{result['author_name']}\n视频简介：{result['video_description']}"),
-                # ]
-                if self.nap_server_address !="localhost":
-                    nap_file_path = send_file(file_path, HOST=self.nap_server_address, PORT=self.nap_server_port)
-                    print(nap_file_path)
-                else :
-                    nap_file_path = file_path
-                yield event.chain_result([
-                    # Plain(f"作者昵称：{result['author_name']}\n视频简介：{result['video_description']}"),
-                    Video(file=nap_file_path)
-                ])
-            else:
-                print("解析失败，请检查链接是否正确。")  # 添加日志记录
-                yield event.plain_result("检测到抖音链接，但解析失败，请检查链接是否正确。")
 
