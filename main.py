@@ -12,8 +12,6 @@ import matplotlib.font_manager as fm
 from .get_song import search_song
 import requests
 from .file_send_server import send_file
-from .dying_get import process_douyin_video
-from .bili_get import parse_bili_video
 from astrbot.api.event import filter, AstrMessageEvent
 import re
 
